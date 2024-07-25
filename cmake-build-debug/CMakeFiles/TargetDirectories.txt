@@ -1,0 +1,3 @@
+/home/marco/Parallel-Programming-Projects/cmake-build-debug/CMakeFiles/Parallel_Programming_Projects.dir
+/home/marco/Parallel-Programming-Projects/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/marco/Parallel-Programming-Projects/cmake-build-debug/CMakeFiles/rebuild_cache.dir
