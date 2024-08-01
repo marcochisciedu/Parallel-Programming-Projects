@@ -121,5 +121,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/Parallel_Programming_Projects.dir/DependInfo.cmake"
+  "CMakeFiles/Kmeans_clustering.dir/DependInfo.cmake"
   )

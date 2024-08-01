@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/marco/Parallel-Programming-Projects
+CMAKE_SOURCE_DIR = /mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/marco/Parallel-Programming-Projects/cmake-build-debug
+CMAKE_BINARY_DIR = /mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/marco/Parallel-Programming-Projects/cmake-build-debug/CMakeFiles /home/marco/Parallel-Programming-Projects/cmake-build-debug//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects/cmake-build-debug/CMakeFiles /mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects/cmake-build-debug//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/marco/Parallel-Programming-Projects/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -117,41 +117,65 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Parallel_Programming_Projects
+# Target rules for targets named Kmeans_clustering
 
 # Build rule for target.
-Parallel_Programming_Projects: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Parallel_Programming_Projects
-.PHONY : Parallel_Programming_Projects
+Kmeans_clustering: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Kmeans_clustering
+.PHONY : Kmeans_clustering
 
 # fast build rule for target.
-Parallel_Programming_Projects/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Parallel_Programming_Projects.dir/build.make CMakeFiles/Parallel_Programming_Projects.dir/build
-.PHONY : Parallel_Programming_Projects/fast
+Kmeans_clustering/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Kmeans_clustering.dir/build.make CMakeFiles/Kmeans_clustering.dir/build
+.PHONY : Kmeans_clustering/fast
 
-main.o: main.cpp.o
-.PHONY : main.o
+Cluster.o: Cluster.cpp.o
+.PHONY : Cluster.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Parallel_Programming_Projects.dir/build.make CMakeFiles/Parallel_Programming_Projects.dir/main.cpp.o
-.PHONY : main.cpp.o
+Cluster.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Kmeans_clustering.dir/build.make CMakeFiles/Kmeans_clustering.dir/Cluster.cpp.o
+.PHONY : Cluster.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+Cluster.i: Cluster.cpp.i
+.PHONY : Cluster.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Parallel_Programming_Projects.dir/build.make CMakeFiles/Parallel_Programming_Projects.dir/main.cpp.i
-.PHONY : main.cpp.i
+Cluster.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Kmeans_clustering.dir/build.make CMakeFiles/Kmeans_clustering.dir/Cluster.cpp.i
+.PHONY : Cluster.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+Cluster.s: Cluster.cpp.s
+.PHONY : Cluster.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Parallel_Programming_Projects.dir/build.make CMakeFiles/Parallel_Programming_Projects.dir/main.cpp.s
-.PHONY : main.cpp.s
+Cluster.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Kmeans_clustering.dir/build.make CMakeFiles/Kmeans_clustering.dir/Cluster.cpp.s
+.PHONY : Cluster.cpp.s
+
+KMeansSeq.o: KMeansSeq.cpp.o
+.PHONY : KMeansSeq.o
+
+# target to build an object file
+KMeansSeq.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Kmeans_clustering.dir/build.make CMakeFiles/Kmeans_clustering.dir/KMeansSeq.cpp.o
+.PHONY : KMeansSeq.cpp.o
+
+KMeansSeq.i: KMeansSeq.cpp.i
+.PHONY : KMeansSeq.i
+
+# target to preprocess a source file
+KMeansSeq.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Kmeans_clustering.dir/build.make CMakeFiles/Kmeans_clustering.dir/KMeansSeq.cpp.i
+.PHONY : KMeansSeq.cpp.i
+
+KMeansSeq.s: KMeansSeq.cpp.s
+.PHONY : KMeansSeq.s
+
+# target to generate assembly for a file
+KMeansSeq.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Kmeans_clustering.dir/build.make CMakeFiles/Kmeans_clustering.dir/KMeansSeq.cpp.s
+.PHONY : KMeansSeq.cpp.s
 
 # Help Target
 help:
@@ -161,10 +185,13 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... Parallel_Programming_Projects"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... Kmeans_clustering"
+	@echo "... Cluster.o"
+	@echo "... Cluster.i"
+	@echo "... Cluster.s"
+	@echo "... KMeansSeq.o"
+	@echo "... KMeansSeq.i"
+	@echo "... KMeansSeq.s"
 .PHONY : help
 
 
