@@ -1,4 +1,0 @@
-C:\WINDOWS\system32\wsl.exe --distribution Ubuntu --exec "/mnt/c/Program Files/JetBrains/CLion 2024.1.4/bin/ttyfix" /bin/bash -c "export CLION_IDE=TRUE && export CMAKE_COLOR_DIAGNOSTICS=ON && export JETBRAINS_IDE=TRUE && cd /mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects/cmake-build-debug && /usr/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G 'CodeBlocks - Unix Makefiles' -S /mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects -B /mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects/cmake-build-debug; exitcode=$?; sleep 0.001; (exit $exitcode)"
--- Configuring done
--- Generating done
--- Build files have been written to: /mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects/cmake-build-debug

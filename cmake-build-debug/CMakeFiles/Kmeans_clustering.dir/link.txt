@@ -1,1 +1,0 @@
-/usr/bin/c++  -fopenmp  -g CMakeFiles/Kmeans_clustering.dir/testKMeans.cpp.o CMakeFiles/Kmeans_clustering.dir/KMeansSeq.cpp.o CMakeFiles/Kmeans_clustering.dir/Cluster.cpp.o -o Kmeans_clustering 
