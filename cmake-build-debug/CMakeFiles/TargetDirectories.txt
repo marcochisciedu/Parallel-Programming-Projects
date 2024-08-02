@@ -1,3 +1,0 @@
-/mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects/cmake-build-debug/CMakeFiles/Kmeans_clustering.dir
-/mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects/cmake-build-debug/CMakeFiles/edit_cache.dir
-/mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects/cmake-build-debug/CMakeFiles/rebuild_cache.dir
