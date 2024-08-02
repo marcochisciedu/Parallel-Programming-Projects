@@ -205,6 +205,4 @@ CMakeFiles/Kmeans_clustering.dir/KMeansSeq.cpp.o: \
  /usr/include/c++/11/bits/random.tcc /usr/include/c++/11/numeric \
  /usr/include/c++/11/bits/stl_numeric.h /usr/include/c++/11/bit \
  /usr/include/c++/11/pstl/glue_numeric_defs.h \
- /mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects/Cluster.h \
- /usr/include/c++/11/chrono /usr/include/c++/11/ratio \
- /usr/include/c++/11/bits/parse_numbers.h
+ /mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects/Cluster.h

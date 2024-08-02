@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects/Cluster.cpp" "CMakeFiles/Kmeans_clustering.dir/Cluster.cpp.o" "gcc" "CMakeFiles/Kmeans_clustering.dir/Cluster.cpp.o.d"
   "/mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects/KMeansSeq.cpp" "CMakeFiles/Kmeans_clustering.dir/KMeansSeq.cpp.o" "gcc" "CMakeFiles/Kmeans_clustering.dir/KMeansSeq.cpp.o.d"
+  "/mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects/testKMeans.cpp" "CMakeFiles/Kmeans_clustering.dir/testKMeans.cpp.o" "gcc" "CMakeFiles/Kmeans_clustering.dir/testKMeans.cpp.o.d"
   )
 
 # Targets to which this target links.

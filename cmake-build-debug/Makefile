@@ -177,6 +177,30 @@ KMeansSeq.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Kmeans_clustering.dir/build.make CMakeFiles/Kmeans_clustering.dir/KMeansSeq.cpp.s
 .PHONY : KMeansSeq.cpp.s
 
+testKMeans.o: testKMeans.cpp.o
+.PHONY : testKMeans.o
+
+# target to build an object file
+testKMeans.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Kmeans_clustering.dir/build.make CMakeFiles/Kmeans_clustering.dir/testKMeans.cpp.o
+.PHONY : testKMeans.cpp.o
+
+testKMeans.i: testKMeans.cpp.i
+.PHONY : testKMeans.i
+
+# target to preprocess a source file
+testKMeans.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Kmeans_clustering.dir/build.make CMakeFiles/Kmeans_clustering.dir/testKMeans.cpp.i
+.PHONY : testKMeans.cpp.i
+
+testKMeans.s: testKMeans.cpp.s
+.PHONY : testKMeans.s
+
+# target to generate assembly for a file
+testKMeans.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Kmeans_clustering.dir/build.make CMakeFiles/Kmeans_clustering.dir/testKMeans.cpp.s
+.PHONY : testKMeans.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -192,6 +216,9 @@ help:
 	@echo "... KMeansSeq.o"
 	@echo "... KMeansSeq.i"
 	@echo "... KMeansSeq.s"
+	@echo "... testKMeans.o"
+	@echo "... testKMeans.i"
+	@echo "... testKMeans.s"
 .PHONY : help
 
 

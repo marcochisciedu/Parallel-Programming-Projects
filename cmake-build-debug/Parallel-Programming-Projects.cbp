@@ -94,6 +94,9 @@
 		<Unit filename="/mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects/KMeansSeq.h">
 			<Option target="Kmeans_clustering"/>
 		</Unit>
+		<Unit filename="/mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects/testKMeans.cpp">
+			<Option target="Kmeans_clustering"/>
+		</Unit>
 		<Unit filename="/mnt/c/Users/Marco/Desktop/Parallel-Programming-Projects/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
