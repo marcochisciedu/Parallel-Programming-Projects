@@ -10,10 +10,23 @@ set(SOURCE_FILES KMeansSeq.cpp
         KMeansSeq.h
         Cluster.cpp
         Cluster.h
-        testKMeans.cpp)
+        testKMeans.cpp
+        LevenshteinDistance.h
+        LevenshteinDistance.cpp
+        checkVocabularySeq.cpp
+        checkVocabularySeq.h
+        testLevenshteinDistance.cpp)
+
 add_executable(Kmeans_clustering
         testKMeans.cpp
         KMeansSeq.cpp
         KMeansSeq.h
         Cluster.cpp
         Cluster.h)
+
+add_executable(Levenshtein_distance
+        LevenshteinDistance.h
+        LevenshteinDistance.cpp
+        checkVocabularySeq.cpp
+        checkVocabularySeq.h
+        testLevenshteinDistance.cpp)
