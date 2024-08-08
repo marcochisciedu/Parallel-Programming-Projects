@@ -1,10 +1,15 @@
 #include <chrono>
 
 #include "KMeansSeq.h"
+#include "generateData.h"
 
 int main(int argc, char **argv){
+    // code to generate random csv files with coordinates to clusters
+    //generate_random_csv("10mil8d.csv", 10000000, 8, 11);
+
     std::string line;
-    std::ifstream file("clusters/basic5_train.csv");
+    std::string filename= "1mil2d";
+    std::ifstream file("clusters/"+filename+".csv");
     if (!file.is_open())
     {
         printf("Error: Failed to open file. \n");
@@ -25,13 +30,13 @@ int main(int argc, char **argv){
     file.close();
     printf("Data fetched successfully! \n");
 
-    int iters = 10000, k = 3;
+    int iters = 1, k = 2;
 
     typedef std::chrono::high_resolution_clock Clock;
     auto t1 = Clock::now();
 
-    KMeansSeq kmeansSeq(points,k,iters,"clusters");
-    kmeansSeq.run();
+    KMeansSeq kmeansSeq(points,k,iters);
+    kmeansSeq.run("clusters", filename);
 
     auto t2 = Clock::now();
 

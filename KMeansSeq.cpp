@@ -6,11 +6,10 @@
 #include <utility>
 #include "Cluster.h"
 
-KMeansSeq::KMeansSeq(std::vector<Point> &all_points, int K, int iterations, std::string output_dir)
+KMeansSeq::KMeansSeq(std::vector<Point> &all_points, int K, int iterations)
 {
     this->K = K;
     this->iters = iterations;
-    this->output_dir = std::move(output_dir);
     this->points = all_points;
     this->dimensions = points[0].getDimensions();
 }
@@ -48,7 +47,7 @@ int KMeansSeq::getNearestClusterId(const Point& point){
     return NearestClusterId;
 }
 
-void KMeansSeq::run(){   // Initializing Clusters
+void KMeansSeq::run( const std::string& output_dir, const std::string& original_filename){   // Initializing Clusters
 
     // get random number from uniform distribution with a seed, always the same results
     std::default_random_engine eng{static_cast<long unsigned int>(time(0))};
@@ -131,7 +130,7 @@ void KMeansSeq::run(){   // Initializing Clusters
 
     // creat output file with coordinates and clusterId of each Point
     std::ofstream outfile;
-    outfile.open(output_dir + "/" + std::to_string(K) + "-clusters.csv");
+    outfile.open(output_dir + "/"+ original_filename+ "_" + std::to_string(K) + "-clusters.csv");
     if (outfile.is_open()) {
         for (int i = 0; i < dimensions; i++) {
             outfile << i+1 <<"° coordinate,";

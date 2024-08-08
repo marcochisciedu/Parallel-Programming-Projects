@@ -17,7 +17,7 @@ std::vector<double> Point::lineToVec(std::string &line){
     // 48-57 are 0-9 in ASCII
     for (int i = 0; i < (int)line.length(); i++)
     {
-        if ((48 <= int(line[i]) && int(line[i])  <= 57) || line[i] == '.' )
+        if ((48 <= int(line[i]) && int(line[i])  <= 57) || line[i] == '.' || line[i]== '-')
         {
             tmp += line[i];
         }

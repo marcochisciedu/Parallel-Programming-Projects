@@ -17,14 +17,13 @@
 class KMeansSeq{
 
 public:
-    KMeansSeq(std::vector<Point> &points, int K, int iterations, std::string output_dir);
+    KMeansSeq(std::vector<Point> &points, int K, int iterations);
 
-    void run();
+    void run(const std::string& output_dir, const std::string& original_filename);
 
 private:
     int K, iters, dimensions;
     std::vector<Cluster> clusters;
-    std::string output_dir;
     std::vector<Point> points;
     void clearClusters();
 
