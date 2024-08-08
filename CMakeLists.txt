@@ -1,32 +1,3 @@
-cmake_minimum_required(VERSION 3.22)
-project(Parallel-Programming-Projects)
-
-set(CMAKE_CXX_STANDARD 17)
-
-# in Linux just use -fopenmp, without -lomp and -Xpreprocessor
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp ")
-
-set(SOURCE_FILES KMeansSeq.cpp
-        KMeansSeq.h
-        Cluster.cpp
-        Cluster.h
-        testKMeans.cpp
-        LevenshteinDistance.h
-        LevenshteinDistance.cpp
-        checkVocabularySeq.cpp
-        checkVocabularySeq.h
-        testLevenshteinDistance.cpp)
-
-add_executable(Kmeans_clustering
-        testKMeans.cpp
-        KMeansSeq.cpp
-        KMeansSeq.h
-        Cluster.cpp
-        Cluster.h)
-
-add_executable(Levenshtein_distance
-        LevenshteinDistance.h
-        LevenshteinDistance.cpp
-        checkVocabularySeq.cpp
-        checkVocabularySeq.h
-        testLevenshteinDistance.cpp)
+version https://git-lfs.github.com/spec/v1
+oid sha256:96a418cd71053b5d13269944e3f97f1a4b625125762e7cf6ed4ea75a620c47da
+size 1008
