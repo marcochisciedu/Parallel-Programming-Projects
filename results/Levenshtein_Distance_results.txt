@@ -1,0 +1,36 @@
+Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/all_Languages.txt
+Mean milliseconds sequential: 60050.5
+Mean milliseconds parallel with more critical sections: 28147 mean speedup: 2.13535
+Mean milliseconds parallel with one final critical section: 28677.2 mean speedup: 2.10823
+
+Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/all_Languages_2.txt
+Mean milliseconds sequential: 120192
+Mean milliseconds parallel with more critical sections: 54525.9 mean speedup: 2.20436
+Mean milliseconds parallel with one final critical section: 54536.8 mean speedup: 2.20457
+
+Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/all_Languages_10.txt
+Mean milliseconds sequential: 614395
+Mean milliseconds parallel with more critical sections: 267448 mean speedup: 2.29712
+Mean milliseconds parallel with one final critical section: 266866 mean speedup: 2.30335
+
+Selected string: asfsafsafafwasxfsafsasafsafsafsfsaw searched in file: vocabularies/1milRand30.txt
+Mean milliseconds sequential: 14490.3
+Mean milliseconds parallel with more critical sections: 6747.68 mean speedup: 2.1507
+Mean milliseconds parallel with one final critical section: 6664.42 mean speedup: 2.17542
+
+Selected string: asfsafsafafwasxfsafsasafsafsafsfsaw searched in file: vocabularies/1milRand60.txt
+Mean milliseconds sequential: 26699.6
+Mean milliseconds parallel with more critical sections: 12450.7 mean speedup: 2.14583
+Mean milliseconds parallel with one final critical section: 12338.9 mean speedup: 2.1643
+
+Selected string: asfsafsafafwasxfsafsasafsafsafsfsaw searched in file: vocabularies/10milRand30.txt
+Mean milliseconds sequential: 134484
+Mean milliseconds parallel with more critical sections: 63082.8 mean speedup: 2.13204
+Mean milliseconds parallel with one final critical section: 63492.5 mean speedup: 2.11814
+
+Selected string: asfsafsafafwasxfsafsasafsafsafsfsaw searched in file: vocabularies/10milRand60.txt
+Mean milliseconds sequential: 264186
+Mean milliseconds parallel with more critical sections: 122930 mean speedup: 2.14914
+Mean milliseconds parallel with one final critical section: 121632 mean speedup: 2.17187
+
+
