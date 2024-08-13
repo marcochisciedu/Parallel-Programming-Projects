@@ -3,7 +3,7 @@
 
 int min(int x, int y, int z) { return std::min(std::min(x, y), z); }
 
-int levenshteinDistanceSeq(const std::string& str1, const int length1, const std::string& str2, const int length2){
+int levenshteinDistance(const std::string& str1, const int length1, const std::string& str2, const int length2){
     // Create a table to store results of subproblems
     int table[length1 + 1][length2 + 1];
 
