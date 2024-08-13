@@ -8,6 +8,6 @@
 #include <fstream>
 #include <string>
 
-void checkVocabularySeq(const std::string& string,const std::string& filename, const int& fileLength);
+void checkVocabularySeq(const std::string& string, const std::vector<std::string>& words);
 
 #endif //PARALLEL_PROGRAMMING_PROJECTS_CHECKVOCABULARYSEQ_H
