@@ -43,6 +43,8 @@ public:
 
     void addPoint(Point p);
 
+    void addPoints(std::vector<Point> ps);
+
     void removeAllPoints() { points.clear(); }
 
     [[nodiscard]] int getId() const { return clusterId; }

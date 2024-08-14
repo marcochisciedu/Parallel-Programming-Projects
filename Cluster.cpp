@@ -50,3 +50,7 @@ void Cluster::addPoint(Point p) {
         p.setCluster(this->clusterId);
         points.push_back(p);
 }
+
+void Cluster::addPoints(std::vector<Point> ps){
+    points.insert(points.end(), ps.begin(), ps.end());
+}

@@ -1,0 +1,76 @@
+
+Searching for 4 clusters in 1mil2d with 100 iterations
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+On average, the sequential version of kmeans completed in 141660 milliseconds
+On average, the parallel version of kmeans completed in 85476.8 milliseconds with a 1.65736 speedup
+On average, the parallel version of kmeans with reduction completed in 85551.4 milliseconds with a 1.65683 speedup
+
+Searching for 8 clusters in 1mil2d with 100 iterations
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+On average, the sequential version of kmeans completed in 185951 milliseconds
+On average, the parallel version of kmeans completed in 107179 milliseconds with a 1.73585 speedup
+On average, the parallel version of kmeans with reduction completed in 105281 milliseconds with a 1.76629 speedup
+
+Searching for 8 clusters in 1mil4d with 100 iterations
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+On average, the sequential version of kmeans completed in 317912 milliseconds
+On average, the parallel version of kmeans completed in 150326 milliseconds with a 2.11498 speedup
+On average, the parallel version of kmeans with reduction completed in 153610 milliseconds with a 2.07378 speedup
+
+Searching for 8 clusters in 1mil8d with 100 iterations
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+On average, the sequential version of kmeans completed in 601112 milliseconds
+On average, the parallel version of kmeans completed in 255223 milliseconds with a 2.37109 speedup
+On average, the parallel version of kmeans with reduction completed in 262324 milliseconds with a 2.29996 speedup
+
+Searching for 8 clusters in 10mil2d with 100 iterations
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+The files are the same
+On average, the sequential version of kmeans completed in 1.97355e+06 milliseconds
+On average, the parallel version of kmeans completed in 1.07509e+06 milliseconds with a 1.83685 speedup
+On average, the parallel version of kmeans with reduction completed in 1.04043e+06 milliseconds with a 1.89703 speedup
+
