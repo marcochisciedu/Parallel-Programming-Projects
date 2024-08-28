@@ -8,7 +8,7 @@ I also used some coordinates and vocabularies found online to do some tests (csv
 ## Kmeans
 Cluster.h and Cluster.cpp contain the definition and implementation of the classes Point and Cluster that are used in the Kmeans algorithm.
 
-In Kmeans.h and Kmeans.cpp the algorithm is implemented as a class with its parameters (k, the number of iterations to cluster), all the points, the clusters and three different run methods.
+In Kmeans.h and Kmeans.cpp the algorithm is implemented as a class with its parameters (k and the number of iterations to cluster), all the points, the clusters and three different run methods.
 runSeq() runs a sequential version of Kmeans, while the other two run methods are two different versions of parallel Kmeans using OpenMP.
 
 plotKmeans.py is a small fragment of code that prints all the points color-coded given their final cluster id. It was used to produce 2D visualizations of clustering (saved in images) to show that the K-means algorithm is correct.
