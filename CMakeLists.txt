@@ -33,7 +33,12 @@ ENDIF()]]
 # in Linux just use -fopenmp, without -lomp and -Xpreprocessor
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp ")
 
-set(SOURCE_FILES KMeans.cpp
+set(SOURCE_FILES KMeansSoA.cpp
+        KMeansSoA.h
+        PointsSoA.cpp
+        PointsSoA.h
+        testKMeansSoA.cpp
+        KMeans.cpp
         KMeans.h
         Cluster.cpp
         Cluster.h
@@ -54,6 +59,15 @@ add_executable(Kmeans_clustering
         KMeans.h
         Cluster.cpp
         Cluster.h
+        generateData.cpp
+        generateData.h)
+
+add_executable(Kmeans_clustering_SoA
+        testKMeansSoA.cpp
+        KMeansSoA.cpp
+        KMeansSoA.h
+        PointsSoA.cpp
+        PointsSoA.h
         generateData.cpp
         generateData.h)
 
