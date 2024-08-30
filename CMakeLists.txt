@@ -3,7 +3,7 @@ project(Parallel-Programming-Projects)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# serve ad ON per attivare la parte successiva e usare il sanitizer
+# ON to activate the thread sanitizer
 #[[OPTION(CB_THREADSANITIZER "Enable ThreadSanitizer data race detector."
     ON)
 INCLUDE(CheckCCompilerFlag)
