@@ -35,35 +35,14 @@ void compare_csv(const std::string& firstFileName,const std::string& secondFileN
     }
 }
 
-/*void testKMeans(const std::string& filename, const int& k, const int& iters_kmeans, const int& out_iters ){
-    std::string line;
-    std::ifstream file("clusters/"+filename+".csv");
-    if (!file.is_open())
-    {
-        printf("Error: Failed to open file. \n");
-        return ;
-    }
-
-    // Fetching points from file
-    int pointId = 0;
-    std::vector<Point> points;
-    while (getline(file, line))
-    {   if(pointId>0){ // skip the first line
-            Point point(pointId, line);
-            points.push_back(point);
-        }
-        pointId++;
-    }
-
-    file.close();
-    printf("Data fetched successfully! \n");
-
+void testKMeans(const std::string& filename, const int& k, const int& iters_kmeans, const int& out_iters ){
+    Points8D points8D = linetoPoints8D("1mil8d");
 
     // outputfile to store the results
     std::ofstream outfile;
-    outfile.open("results/Kmeans_results.txt", std::ios_base::app);
+    outfile.open("results/KmeansSoA_results.txt", std::ios_base::app);
     if (!outfile.is_open()){
-        printf("Error: Unable to write to Kmeans_results.txt \n");
+        printf("Error: Unable to write to KmeansSoA_results.txt \n");
         return;
     }
 
@@ -73,7 +52,7 @@ void compare_csv(const std::string& firstFileName,const std::string& secondFileN
     double mean_time_seq = 0, mean_time_par = 0, mean_speedup = 0, mean_time_par_reduction = 0, mean_speedup_reduction =0;
     for(int i = 0; i< out_iters; i++) {
         std::cout << "Total iteration: "<< i+1 << "/" << out_iters << std::endl;
-        KMeansSoA kmeans(points, k, iters_kmeans);
+        KMeansSoA kmeans(points8D, k, iters_kmeans);
 
         double time_seq = kmeans.runSeq("clusters", filename);
         printf("The sequential version of kmeans completed in %f milliseconds \n", time_seq);
@@ -81,8 +60,8 @@ void compare_csv(const std::string& firstFileName,const std::string& secondFileN
 
         kmeans.resetPointsClusters();
 
-        double time_par = kmeans.runPar("clusters", filename);
-        printf("The parallel version of kmeans completed in %f milliseconds \n", time_par);
+        double time_par = kmeans.runParPrivate("clusters", filename);
+        printf("The private parallel version of kmeans completed in %f milliseconds \n", time_par);
         double speedup = time_seq / time_par;
         printf("The speedup is %f \n", speedup);
         mean_time_par += time_par;
@@ -91,7 +70,7 @@ void compare_csv(const std::string& firstFileName,const std::string& secondFileN
         compare_csv("clusters/" + filename + "_par_" + std::to_string(k) + "-clusters.csv",
                     "clusters/" + filename + "_seq_" + std::to_string(k) + "-clusters.csv", outfile);
 
-        kmeans.resetPointsClusters();
+        /*kmeans.resetPointsClusters();
 
         double time_par_reduction = kmeans.runParReduction("clusters", filename);
         printf("The parallel version of kmeans with reduction completed in %f milliseconds \n", time_par_reduction);
@@ -101,30 +80,27 @@ void compare_csv(const std::string& firstFileName,const std::string& secondFileN
         mean_speedup_reduction += speedup_reduction;
 
         compare_csv("clusters/" + filename + "_par_red_" + std::to_string(k) + "-clusters.csv",
-                    "clusters/" + filename + "_seq_" + std::to_string(k) + "-clusters.csv", outfile);
+                    "clusters/" + filename + "_seq_" + std::to_string(k) + "-clusters.csv", outfile); */
     }
 
-    mean_time_seq /= out_iters, mean_time_par /= out_iters, mean_speedup /= out_iters,
-            mean_time_par_reduction /= out_iters, mean_speedup_reduction /= out_iters ;
+    mean_time_seq /= out_iters, mean_time_par /= out_iters, mean_speedup /= out_iters;
+           // mean_time_par_reduction /= out_iters, mean_speedup_reduction /= out_iters;
     outfile << "On average, the sequential version of kmeans completed in " << mean_time_seq
     << " milliseconds" << std::endl;
 
     outfile << "On average, the parallel version of kmeans completed in " << mean_time_par << " milliseconds with a "
             << mean_speedup << " speedup" << std::endl;
-    outfile << "On average, the parallel version of kmeans with reduction completed in " << mean_time_par_reduction <<
-            " milliseconds with a " << mean_speedup_reduction << " speedup" << std::endl;
+   // outfile << "On average, the parallel version of kmeans with reduction completed in " << mean_time_par_reduction <<
+     //       " milliseconds with a " << mean_speedup_reduction << " speedup" << std::endl;
     outfile << std::endl;
-} */
+}
 
 
 int main(int argc, char **argv){
     // code to generate random csv files with coordinates to clusters
     //generate_random_csv("10mil8d.csv", 10000000, 8, 11);
 
-    Points8D points8D = linetoPoints8D("1mil8d");
-    KMeansSoA kmeans(points8D, 2, 5);
-    kmeans.runSeq("clusters", "1mil8d");
-
+    testKMeans("1mil8d", 2 ,5,1);
 
     // serve free(coordinate di struct) ?? guardare codice
     return 0;

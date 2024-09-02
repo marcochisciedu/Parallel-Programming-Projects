@@ -23,10 +23,18 @@ On average, the sequential version of kmeans completed in 1.97355e+06 millisecon
 On average, the parallel version of kmeans completed in 1.07509e+06 milliseconds with a 1.83685 speedup
 On average, the parallel version of kmeans with reduction completed in 1.04043e+06 milliseconds with a 1.89703 speedup
 
-Searching for 2 clusters in basic1 with 2 iterations
+Searching for 2 clusters in basic1 with 5 iterations
 The files are the same
 The files are the same
-On average, the sequential version of kmeans completed in 68.8481 milliseconds
-On average, the parallel version of kmeans completed in 45.5105 milliseconds with a 1.5128 speedup
-On average, the parallel version of kmeans with reduction completed in 315.936 milliseconds with a 0.217918 speedup
+On average, the sequential version of kmeans completed in 249.232 milliseconds
+On average, the parallel version of kmeans completed in 333.506 milliseconds with a 0.747309 speedup
+On average, the parallel version of kmeans with reduction completed in 72.4719 milliseconds with a 3.43901 speedup
+
+
+Searching for 2 clusters in 1mil8d with 5 iterations
+The files are the same
+The files are the same
+On average, the sequential version of kmeans completed in 16809.3 milliseconds
+On average, the parallel version of kmeans completed in 10145.3 milliseconds with a 1.65686 speedup
+On average, the parallel version of kmeans with reduction completed in 8260.72 milliseconds with a 2.03485 speedup
 

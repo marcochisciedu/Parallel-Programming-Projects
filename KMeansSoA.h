@@ -21,7 +21,9 @@ public:
 
     double runSeq(const std::string& output_dir, const std::string& original_filename);
 
-    void resetPointsClustersID() const;
+    double runParPrivate(const std::string& output_dir, const std::string& original_filename);
+
+    void resetPointsClusters() ;
 
 private:
     int K, iters;

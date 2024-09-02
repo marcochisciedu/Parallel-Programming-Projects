@@ -1,0 +1,5 @@
+Searching for 2 clusters in 1mil8d with 5 iterations
+The files are the same
+On average, the sequential version of kmeans completed in 3443.64 milliseconds
+On average, the parallel version of kmeans completed in 1510.91 milliseconds with a 2.27918 speedup
+
