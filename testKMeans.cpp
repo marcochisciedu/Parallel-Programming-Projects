@@ -75,33 +75,33 @@ void testKMeans(const std::string& filename, const int& k, const int& iters_kmea
         std::cout << "Total iteration: "<< i+1 << "/" << out_iters << std::endl;
         KMeans kmeans(points, k, iters_kmeans);
 
-        double time_seq = kmeans.runSeq("clusters", filename);
+        double time_seq = kmeans.runSeq("output_clusters", filename);
         printf("The sequential version of kmeans completed in %f milliseconds \n", time_seq);
         mean_time_seq += time_seq;
 
         kmeans.resetPointsClusters();
 
-        double time_par = kmeans.runPar("clusters", filename);
+        double time_par = kmeans.runPar("output_clusters", filename);
         printf("The parallel version of kmeans completed in %f milliseconds \n", time_par);
         double speedup = time_seq / time_par;
         printf("The speedup is %f \n", speedup);
         mean_time_par += time_par;
         mean_speedup += speedup;
 
-        compare_csv("clusters/" + filename + "_par_" + std::to_string(k) + "-clusters.csv",
-                    "clusters/" + filename + "_seq_" + std::to_string(k) + "-clusters.csv", outfile);
+        compare_csv("output_clusters/" + filename + "_par_" + std::to_string(k) + "-clusters.csv",
+                    "output_clusters/" + filename + "_seq_" + std::to_string(k) + "-clusters.csv", outfile);
 
         kmeans.resetPointsClusters();
 
-        double time_par_reduction = kmeans.runParReduction("clusters", filename);
+        double time_par_reduction = kmeans.runParReduction("output_clusters", filename);
         printf("The parallel version of kmeans with reduction completed in %f milliseconds \n", time_par_reduction);
         double speedup_reduction = time_seq / time_par_reduction;
         printf("The speedup with reduction is %f \n", speedup_reduction);
         mean_time_par_reduction += time_par_reduction;
         mean_speedup_reduction += speedup_reduction;
 
-        compare_csv("clusters/" + filename + "_par_red_" + std::to_string(k) + "-clusters.csv",
-                    "clusters/" + filename + "_seq_" + std::to_string(k) + "-clusters.csv", outfile);
+        compare_csv("output_clusters/" + filename + "_par_red_" + std::to_string(k) + "-clusters.csv",
+                    "output_clusters/" + filename + "_seq_" + std::to_string(k) + "-clusters.csv", outfile);
     }
     mean_time_seq /= out_iters, mean_time_par /= out_iters, mean_speedup /= out_iters,
             mean_time_par_reduction /= out_iters, mean_speedup_reduction /= out_iters ;
@@ -119,7 +119,8 @@ int main(int argc, char **argv){
     // code to generate random csv files with coordinates to clusters
     //generate_random_csv("10mil8d.csv", 10000000, 8, 11);
 
-    testKMeans("1mil2d" , 4 , 100 , 5);
+    testKMeans("1mil8d", 2 ,5,1);
+    /*testKMeans("1mil2d" , 4 , 100 , 5);
 
     testKMeans("1mil2d" , 8 , 100 , 5);
 
@@ -128,7 +129,7 @@ int main(int argc, char **argv){
     testKMeans("1mil8d" , 8 , 100 , 5);
 
     testKMeans("10mil2d" , 8 , 100 , 5);
-
+    */
 
     return 0;
 }
