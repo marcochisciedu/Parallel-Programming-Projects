@@ -10,20 +10,61 @@
 #include <sstream>
 #include <vector>
 
-struct Points8D{
-    int num_points;
-    int* clusterId;
-    double* firstCoord;
-    double* secondCoord;
-    double* thirdCoord;
-    double* fourthCoord;
-    double* fifthCoord;
-    double* sixthCoord;
-    double* seventhCoord;
-    double* eighthsCoord;
+class MultiDimensionalPointArray {
+public:
+    explicit MultiDimensionalPointArray(const std::string& filename);
+
+    // copy constructor
+    MultiDimensionalPointArray(MultiDimensionalPointArray& dimArr){
+        numPoints = dimArr.numPoints;
+        dimensions = dimArr.dimensions;
+        for (size_t i = 0; i < dimensions; i++) {
+            dimensionArrays.push_back(new double[numPoints]);
+            for(size_t p=0; p< numPoints; p++)
+                dimensionArrays[i][p] = dimArr.dimensionArrays[i][p];
+        }
+        clusterId = dimArr.clusterId;
+    }
+
+    ~MultiDimensionalPointArray() {
+        // Free the memory allocated for the dimension arrays
+        for (auto arr : dimensionArrays) {
+            delete[] arr;
+        }
+    }
+
+    double& operator()(size_t pointIndex, size_t dimensionIndex) {
+        return dimensionArrays[dimensionIndex][pointIndex];
+    }
+
+    const double& operator()(size_t pointIndex, size_t dimensionIndex) const {
+        return dimensionArrays[dimensionIndex][pointIndex];
+    }
+
+    [[nodiscard]] size_t getNumPoints() const {
+        return numPoints;
+    }
+    [[nodiscard]] size_t getNumDimensions() const {
+        return dimensions;
+    }
+
+    [[nodiscard]] int getClusterIdByIndex(int index) const { return clusterId[index];}
+
+    void setClusterIdByIndex(int index, int value){ clusterId[index]= value;}
+
+    void fileToPoints(const std::string& filename);
+
+private:
+    size_t numPoints;
+    size_t dimensions;
+    std::vector<double*> dimensionArrays;
+    std::vector<int> clusterId;
+
+    void lineToCoord(std::string &line, int point_num);
+    static size_t getDimFromFile(const std::string& filename);
 };
 
-Points8D linetoPoints8D(const std::string& filename);
+
 
 
 class Cluster {
@@ -39,6 +80,7 @@ public:
 
 private:
     int clusterId;
+    // cordinates
     std::vector<double> centroid;
 };
 

@@ -6,38 +6,55 @@
 #include <utility>
 #include "PointsSoA.h"
 
-std::vector<double> lineToVec(std::string &line){
-    std::vector<double> coordinates;
+// extract a certain point's coordinate from its line
+void MultiDimensionalPointArray::lineToCoord(std::string &line, int point_num){
     std::string tmp;
+    size_t dim=0;
     // 48-57 are 0-9 in ASCII
-    for (int i = 0; i < (int)line.length(); i++)
+    for (int j = 0; j < (int)line.length(); j++)
     {
-        if ((48 <= int(line[i]) && int(line[i])  <= 57) || line[i] == '.' || line[i]== '-')
+        if ((48 <= int(line[j]) && int(line[j])  <= 57) || line[j] == '.' || line[j]== '-')
         {
-            tmp += line[i];
+            tmp += line[j];
         }
         else if (!tmp.empty())
         {   // converts string to double
-            coordinates.push_back(stod(tmp));
+            dimensionArrays[dim][point_num]=stod(tmp);
+            dim++;
             tmp = "";
         }
     }
-    if (!tmp.empty())
-    {
-        coordinates.push_back(stod(tmp));
-        tmp = "";
-    }
-
-    return coordinates;
 }
 
-Points8D linetoPoints8D(const std::string& filename){
+// extract the coordinates from the file
+void MultiDimensionalPointArray::fileToPoints(const std::string& filename){
+    // open the file
+    std::string line;
+    std::ifstream file("clusters/"+filename+".csv");
+    if (!file.is_open())
+    {
+        printf("Error: Failed to open file. \n");
+    }
+    // Fetching points from file and set the null cluster for each point
+    int i=-1;
+    while (getline(file, line))
+    {   if(i>=0){ // skip the first line
+            //initialize all the points clusters as -1 (no cluster)
+            clusterId.push_back(-1);
+            //get the points' coordinates
+            lineToCoord(line, i);
+        }
+        i++;
+    }
 
-    std::ifstream Infile("clusters/"+filename+".csv");
-    int fileLength= (int)std::count(std::istreambuf_iterator<char>(Infile),
-                                    std::istreambuf_iterator<char>(), '\n');
-    std::cout<< "number of points "<< fileLength -1<<std::endl;
+    file.close();
+    printf("Data fetched successfully! \n");
+}
 
+//given a file get the dimensions of its data
+size_t MultiDimensionalPointArray::getDimFromFile(const std::string& filename) {
+    size_t dim=0;
+    //open the file
     std::string line;
     std::ifstream file("clusters/"+filename+".csv");
     if (!file.is_open())
@@ -45,44 +62,48 @@ Points8D linetoPoints8D(const std::string& filename){
         printf("Error: Failed to open file. \n");
     }
 
-    // Fetching points from file
-    struct Points8D points{};
-    points.num_points = fileLength -1;
-    points.clusterId = (int *)malloc((fileLength-1)*sizeof(int));
-    points.firstCoord = (double *)malloc((fileLength-1)*sizeof(double));
-    points.secondCoord = (double *)malloc((fileLength-1)*sizeof(double));
-    points.thirdCoord = (double *)malloc((fileLength-1)*sizeof(double));
-    points.fourthCoord = (double *)malloc((fileLength-1)*sizeof(double));
-    points.fifthCoord = (double *)malloc((fileLength-1)*sizeof(double));
-    points.sixthCoord = (double *)malloc((fileLength-1)*sizeof(double));
-    points.seventhCoord = (double *)malloc((fileLength-1)*sizeof(double));
-    points.eighthsCoord = (double *)malloc((fileLength-1)*sizeof(double));
+    // skip the first line
+    getline(file, line);
+    getline(file, line);
 
-    int i=-1;
-    while (getline(file, line))
-    {   if(i>=0){ // skip the first line
-            //initialize all the points clusters as -1 (no cluster)
-            points.clusterId[i]= -1;
-            //get the coordinates
-            std::vector<double> tmpCoord = lineToVec(line);
-            points.firstCoord[i] = tmpCoord[0];
-            points.secondCoord[i]  = tmpCoord[1];
-            points.thirdCoord[i]  = tmpCoord[2];
-            points.fourthCoord[i]  = tmpCoord[3];
-            points.fifthCoord[i]  = tmpCoord[4];
-            points.sixthCoord[i]  = tmpCoord[5];
-            points.seventhCoord[i]  = tmpCoord[6];
-            points.eighthsCoord[i]  = tmpCoord[7];
+    //count the numbers in the line
+    for (int j = 0; j < (int)line.length(); j++)
+    {
+        if ((48 > int(line[j]) || int(line[j])  > 57) && line[j] != '.' && line[j]!= '-')
+        {
+            dim++;
         }
-        i++;
+
     }
 
     file.close();
-    printf("Data fetched successfully! \n");
 
-    return  points;
+    return dim;
 }
 
+// constructor, initialize the number of points, their dimension and their coordinates
+MultiDimensionalPointArray::MultiDimensionalPointArray(const std::string& filename) {
+    std::ifstream Infile("clusters/"+filename+".csv");
+    if (!Infile.is_open())
+    {
+        printf("Error: Failed to open file. \n");
+    }
+    // count the file's lines except the first
+    numPoints= (int)std::count(std::istreambuf_iterator<char>(Infile),
+                               std::istreambuf_iterator<char>(), '\n') -1;
+    std::cout<< "Number of points: "<< numPoints <<std::endl;
+    Infile.close();
+
+    dimensions = getDimFromFile(filename);
+    std::cout<< "Number of dimensions: "<< dimensions <<std::endl;
+
+    // Allocate memory for the arrays, one for each dimension
+    for (size_t i = 0; i < dimensions; i++) {
+        dimensionArrays.push_back(new double[numPoints]);
+    }
+    // get all the coordinates
+    fileToPoints(filename);
+}
 
 Cluster::Cluster(int clusterId,  std::vector<double> centroid)
 {
