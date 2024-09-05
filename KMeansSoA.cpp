@@ -132,14 +132,6 @@ double KMeansSoA::runSeq( const std::string& output_dir, const std::string& orig
     {
         printf( "Iteration %d/%d \n", iter, iters);
 
-        // reset sums and numPoints
-        for(int c=0; c<K ; c++) {
-            for(int dim= 0; dim < points.getNumDimensions(); dim++){
-                sums[c][dim]=0;
-            };
-            nPoints[c]=0;
-        }
-
         // Calculate each point's new cluster ID and accumulate the sums of each cluster's coordinates
         for (int p =0; p<points.getNumPoints(); p++)
         {
@@ -156,11 +148,13 @@ double KMeansSoA::runSeq( const std::string& output_dir, const std::string& orig
             nPoints[nearestClusterId]++;
         }
 
-        // Recalculate the centroid of each cluster
+        // Recalculate the centroid of each cluster, and reset sums and nPoints
         for(int c=0; c<K ; c++) {
             for (int dim = 0; dim < points.getNumDimensions(); dim++) {
                 clusters[c].setCentroidByPos(dim, sums[c][dim]/nPoints[c]);
+                sums[c][dim]=0;
             }
+            nPoints[c]=0;
         }
     }
     auto t2 = Clock::now();
@@ -218,16 +212,7 @@ double KMeansSoA::runPar( const std::string& output_dir, const std::string& orig
     {   printf( "Iteration %d/%d \n", iter, iters);
 
 #pragma omp parallel default(none) shared(points, clusters, sums, nPoints) num_threads(threads)
-        {// Reset sums and numPoints
-            #pragma omp for
-            for (int c = 0; c < K; c++) {
-                for (int dim = 0; dim < points.getNumDimensions(); dim++) {
-                    sums[c][dim] = 0;
-                }
-                nPoints[c] = 0;
-            }
-
-            // Calculate each point's new cluster ID and accumulate the sums of each cluster's coordinates
+        {   // Calculate each point's new cluster ID and accumulate the sums of each cluster's coordinates
             // each threads takes a part of the points
             #pragma omp for
             for (int p = 0; p < points.getNumPoints(); p++) {
@@ -251,12 +236,14 @@ double KMeansSoA::runPar( const std::string& output_dir, const std::string& orig
                 #pragma omp flush
             }
 
-            // Recalculate the centroid of each cluster
+            // Recalculate the centroid of each cluster and reset sums and nPoints
             #pragma omp for
             for (int c = 0; c < K; c++) {
                 for (int dim = 0; dim < points.getNumDimensions(); dim++) {
                     clusters[c].setCentroidByPos(dim, sums[c][dim] / nPoints[c]);
+                    sums[c][dim] = 0;
                 }
+                nPoints[c] = 0;
             }
         }
     }
@@ -321,15 +308,6 @@ double KMeansSoA::runParPrivate( const std::string& output_dir, const std::strin
             std::vector<std::vector<double> > sumsPrivate(K,std::vector<double>(points.getNumDimensions()));
             std::vector<int> nPointsPrivate(K);
 
-            // Reset sums and numPoints
-            #pragma omp for
-            for (int c = 0; c < K; c++) {
-                for (int dim = 0; dim < points.getNumDimensions(); dim++) {
-                    sums[c][dim] = 0;
-                }
-                nPoints[c] = 0;
-            }
-
             // Calculate each point's new cluster ID and accumulate the private sums of each cluster's coordinates
             // each threads has a part of all the points
             #pragma omp for nowait
@@ -363,12 +341,14 @@ double KMeansSoA::runParPrivate( const std::string& output_dir, const std::strin
             // wait until all the sums and nPoints have been calculated
             #pragma omp barrier
 
-            // Recalculate the centroid of each cluster
+            // Recalculate the centroid of each cluster and reset sums and nPoints
             #pragma omp for
             for (int c = 0; c < K; c++) {
                 for (int dim = 0; dim < points.getNumDimensions(); dim++) {
                     clusters[c].setCentroidByPos(dim, sums[c][dim] / nPoints[c]);
+                    sums[c][dim] = 0;
                 }
+                nPoints[c] = 0;
             }
         }
     }
