@@ -1,14 +1,15 @@
 
 #include "checkVocabularyPar.h"
 
-void checkVocabularyParCrit(const std::string& string, const std::vector<std::string>& words){
+void checkVocabularyParCrit(const std::string& string, const std::vector<std::string>& words, int threads , bool display){
     int string_distance;
     int min_distance = std::numeric_limits<int>::max();
     std::vector<std::string> closest_strings;
 
     // get all the levenshteinDistances from the string to the vocabulary and find the closest strings
     // create the threads, start parallel section
-#pragma omp parallel default(none) shared(min_distance, closest_strings, words) private(string_distance) firstprivate(string)
+#pragma omp parallel default(none) shared(min_distance, closest_strings, words) private(string_distance) \
+firstprivate(string, display) num_threads(threads)
 {   //parallelize the for loop
     #pragma omp for
     for(const auto & word : words){
@@ -35,25 +36,28 @@ void checkVocabularyParCrit(const std::string& string, const std::vector<std::st
     }
     // implicit barrier
 
-    // print the closest strings
+    // print the closest strings if display is true
     //parallelize the for loop since the thread are already available
-    #pragma omp for
-    for (auto &s: closest_strings) {
-        printf("%s is distant %d operations from %s  \n", s.c_str(), min_distance, string.c_str());
+    if(display) {
+        #pragma omp for
+        for (auto &s: closest_strings) {
+            printf("%s is distant %d operations from %s  \n", s.c_str(), min_distance, string.c_str());
+        }
     }
 }
 
 }
 
 
-void checkVocabularyParPrivate(const std::string& string, const std::vector<std::string>& words){
+void checkVocabularyParPrivate(const std::string& string, const std::vector<std::string>& words, int threads, bool display){
     int string_distance;
     int min_distance = std::numeric_limits<int>::max();
     std::vector<std::string> closest_strings;
 
     // get all the levenshteinDistances from the string to the vocabulary and find the closest strings
     // create the threads, start parallel section
-#pragma omp parallel default(none) shared(words, closest_strings, min_distance) private(string_distance) firstprivate(string)
+#pragma omp parallel default(none) shared(words, closest_strings, min_distance) private(string_distance) \
+    firstprivate(string, display) num_threads(threads)
     {   // each thread has its own local variables to search the closest words to the original string
         std::vector<std::string> local_closest_strings;
         int local_min_distance = std::numeric_limits<int>::max();
@@ -90,11 +94,13 @@ void checkVocabularyParPrivate(const std::string& string, const std::vector<std:
         // make sure that all the thread compared their local_closest_strings before final print
         #pragma omp barrier
 
-        // print the closest strings
+        // print the closest strings if display is true
         //parallelize the for loop since the thread are already available
-        #pragma omp for
-        for (auto &s: closest_strings) {
-            printf("%s is distant %d operations from %s  \n", s.c_str(), min_distance, string.c_str());
+        if(display) {
+            #pragma omp for
+            for (auto &s: closest_strings) {
+                printf("%s is distant %d operations from %s  \n", s.c_str(), min_distance, string.c_str());
+            }
         }
     }
 

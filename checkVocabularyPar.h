@@ -8,7 +8,7 @@
 #include <fstream>
 #include <string>
 
-void checkVocabularyParCrit(const std::string& string, const std::vector<std::string>& words);
+void checkVocabularyParCrit(const std::string& string, const std::vector<std::string>& words, int threads, bool display);
 
-void checkVocabularyParPrivate(const std::string& string, const std::vector<std::string>& words);
+void checkVocabularyParPrivate(const std::string& string, const std::vector<std::string>& words, int threads, bool display);
 #endif //PARALLEL_PROGRAMMING_PROJECTS_CHECKVOCABULARYPAR_H

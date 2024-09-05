@@ -1,7 +1,7 @@
 
 #include "checkVocabularySeq.h"
 
-void checkVocabularySeq(const std::string& string, const std::vector<std::string>& words){
+void checkVocabularySeq(const std::string& string, const std::vector<std::string>& words, int threads, bool display){
     int string_distance;
     int min_distance = std::numeric_limits<int>::max();
     std::vector<std::string> closest_strings;
@@ -19,10 +19,11 @@ void checkVocabularySeq(const std::string& string, const std::vector<std::string
             closest_strings.push_back(word);
         }
     }
-
-    // print the closest strings
-    for (auto & s : closest_strings ){
-        printf("%s is distant %d operations from %s  \n", s.c_str(), min_distance, string.c_str());
+    if(display) {
+        // print the closest strings if display is true
+        for (auto &s: closest_strings) {
+            printf("%s is distant %d operations from %s  \n", s.c_str(), min_distance, string.c_str());
+        }
     }
 
 }
