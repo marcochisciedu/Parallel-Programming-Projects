@@ -25,6 +25,8 @@ public:
 
     [[nodiscard]] double getCoord(int pos) const{ return coordinates.at(pos); }
 
+    [[nodiscard]] std::vector<double> getCoordinates() const { return coordinates;}
+
 
 private:
     int pointId, clusterId;
@@ -39,19 +41,9 @@ private:
 class Cluster {
 
 public:
-    Cluster(int clusterId, const Point& centroid);
-
-    void addPoint(Point p);
-
-    void addPoints(std::vector<Point> ps);
-
-    void removeAllPoints() { points.clear(); }
+    Cluster(int clusterId, std::vector<double> centroid);
 
     [[nodiscard]] int getId() const { return clusterId; }
-
-    Point getPoint(int pos) { return points[pos]; }
-
-    [[nodiscard]] int getSize() const{ return (int)points.size(); }
 
     [[nodiscard]] double getCentroidByPos(int pos) const { return centroid[pos]; }
 
@@ -60,7 +52,6 @@ public:
 private:
     int clusterId;
     std::vector<double> centroid;
-    std::vector<Point> points;
 };
 
 

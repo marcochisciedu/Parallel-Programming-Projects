@@ -21,9 +21,9 @@ public:
 
     double runSeq(const std::string& output_dir, const std::string& original_filename);
 
-    double runPar(const std::string& output_dir, const std::string& original_filename);
+    double runPar(const std::string& output_dir, const std::string& original_filename, int threads);
 
-    double runParReduction(const std::string& output_dir, const std::string& original_filename);
+    double runParPrivate(const std::string& output_dir, const std::string& original_filename, int threads);
 
     void resetPointsClusters();
 
@@ -33,7 +33,6 @@ private:
     std::vector<Point> points;
 
     int getNearestClusterId(const Point& point);
-    void clearClusters();
     void createOutputFile(const std::string& output_dir, const std::string& original_filename, const std::string& context);
 
 };

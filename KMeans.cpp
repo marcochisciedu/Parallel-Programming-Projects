@@ -12,19 +12,12 @@ KMeans::KMeans(std::vector<Point> &all_points, int K, int iterations){
     this->dimensions = points[0].getDimensions();
 }
 
-//remove all points from each cluster
-void KMeans::clearClusters(){
-    for (int i = 0; i < K; i++)
-    {
-        clusters[i].removeAllPoints();
-    }
-}
 
 //reset all the clusters and the points' assigned cluster id
 void KMeans::resetPointsClusters() {
     // reset clusters
-    clearClusters();
     clusters.clear();
+
     // reset points
     for(auto & point: points){
         point.setCluster(-1);
@@ -99,7 +92,7 @@ double KMeans::runSeq( const std::string& output_dir, const std::string& origina
     int index = getRandomIndex((int)points.size(), 111);
     // cluster numbered from 0 to k-1
     points[index].setCluster(0);
-    Cluster cluster(0, points[index]);
+    Cluster cluster(0, points[index].getCoordinates());
     clusters.push_back(cluster);
 
     std::vector<double>distances;
@@ -121,21 +114,23 @@ double KMeans::runSeq( const std::string& output_dir, const std::string& origina
         // select the point that is the furthest from all the other clusters as a new centroid
         index = std::max_element(distances.begin(), distances.end())-distances.begin();
         points[index].setCluster(i);
-        Cluster cluster(i, points[index]);
+        Cluster cluster(i, points[index].getCoordinates());
         clusters.push_back(cluster);
     }
     printf( "Initialized %d clusters \n", (int)clusters.size() );
 
     printf("Running K-Means Clustering.. \n");
 
+
+    // Initialize the sums of each cluster and their number of points
+    std::vector<std::vector<double> > sums(K,std::vector<double>(points.size()));
+    std::vector<int> nPoints(K);
+
     for (int iter = 1; iter<=iters; iter++)
     {
         printf( "Iteration %d/%d \n", iter, iters);
 
-        // removes all points from the clusters (the centroids coordinates are not deleted)
-        clearClusters();
-
-        // Add all points to their nearest cluster
+        // Add all points to their nearest cluster and calculate the sums and nPoints
         for (auto & point : points)
         {
             int currentClusterId = point.getCluster();
@@ -145,27 +140,19 @@ double KMeans::runSeq( const std::string& output_dir, const std::string& origina
             {
                 point.setCluster(nearestClusterId);
             }
-            clusters[nearestClusterId].addPoint(point);
+            for (int dim = 0; dim < dimensions; dim++) {
+                sums[nearestClusterId][dim] += point.getCoord(dim);
+            }
+            nPoints[nearestClusterId]++;
         }
 
-
-        // Recalculating the centroid of each cluster
-        for (int i = 0; i < K; i++)
-        {
-            int clusterSize = clusters[i].getSize();
-
-            for (int j = 0; j < dimensions; j++)
-            {
-                double sum = 0.0;
-                if (clusterSize > 0)
-                {
-                    for (int p = 0; p < clusterSize; p++)
-                    {
-                        sum += clusters[i].getPoint(p).getCoord(j);
-                    }
-                    clusters[i].setCentroidByPos(j, sum / clusterSize);
-                }
+        // Recalculate the centroid of each cluster and reset sums and nPoints
+        for(int c=0; c<K ; c++) {
+            for (int dim = 0; dim < dimensions; dim++) {
+                clusters[c].setCentroidByPos(dim, sums[c][dim]/nPoints[c]);
+                sums[c][dim] = 0;
             }
+            nPoints[c] = 0;
         }
 
     }
@@ -178,13 +165,9 @@ double KMeans::runSeq( const std::string& output_dir, const std::string& origina
     return time.count();
 }
 
-// structure to append points given a cluster id
-struct fakeCluster{
-    int clusterId;
-    std::vector<Point> points;
-};
 
-double KMeans::runPar( const std::string& output_dir, const std::string& original_filename){
+
+double KMeans::runPar( const std::string& output_dir, const std::string& original_filename, int threads){
     typedef std::chrono::high_resolution_clock Clock;
     auto t1 = Clock::now();
 
@@ -192,7 +175,7 @@ double KMeans::runPar( const std::string& output_dir, const std::string& origina
     int index = getRandomIndex((int)points.size(), 111);
     // cluster numbered from 0 to k-1
     points[index].setCluster(0);
-    Cluster cluster(0, points[index]);
+    Cluster cluster(0, points[index].getCoordinates());
     clusters.push_back(cluster);
 
     std::vector<double>distances;
@@ -214,66 +197,53 @@ double KMeans::runPar( const std::string& output_dir, const std::string& origina
         // select the point that is the furthest from all the other clusters as a new centroid
         index = std::max_element(distances.begin(), distances.end())-distances.begin();
         points[index].setCluster(i);
-        Cluster cluster(i, points[index]);
+        Cluster cluster(i, points[index].getCoordinates());
         clusters.push_back(cluster);
     }
     printf( "Initialized %d clusters \n", (int)clusters.size() );
 
     printf("Running K-Means Clustering.. \n");
 
+    std::vector<std::vector<double> > sums(K,std::vector<double>(points.size()));
+    std::vector<int> nPoints(K);
+
     for (int iter = 1; iter<=iters; iter++) {
         printf("Iteration %d/%d \n", iter, iters);
 
-        // removes all points from the clusters (the centroids coordinates are not deleted)
-        clearClusters();
-
-#pragma omp parallel default(none) shared(points, clusters,dimensions)
-        {
-            // Add all points to their nearest cluster
-            // each thread can handle its points and has its local clusters (fake, we don't need all their functions)
-            int currentClusterId, nearestClusterId;
-            std::vector<fakeCluster> localClusters;
-            for (int i = 0; i < K; i++){
-                fakeCluster local_cluster= {i, };
-                localClusters.push_back(local_cluster);
-            }
-            // parallelize for cycle,
-            #pragma omp for nowait
+#pragma omp parallel default(none) shared(sums, nPoints, points, clusters,dimensions) num_threads(threads)
+        {   // Add all points to their nearest cluster and accumulate the sums of each cluster's coordinates
+            // parallelize for cycle
+            #pragma omp for
             for (auto &point: points) {
-                currentClusterId = point.getCluster();
-                nearestClusterId = getNearestClusterId(point);
+               int currentClusterId = point.getCluster();
+               int nearestClusterId = getNearestClusterId(point);
 
                 if (currentClusterId != nearestClusterId) {
                     point.setCluster(nearestClusterId);
                 }
 
-                localClusters[nearestClusterId].points.push_back(point);
-            }
-            // synchronize the local clusters, add the points to the real clusters
-            #pragma omp critical
-            {       for (int i = 0; i < K; i++){
-                        clusters[i].addPoints(localClusters[i].points);
+                for (int dim = 0; dim < dimensions; dim++) {
+                    // synchronize access to the shared sums matrix
+                    #pragma omp flush
+                    #pragma omp atomic
+                    sums[nearestClusterId][dim] += point.getCoord(dim);
+                    #pragma omp flush
                 }
+                // synchronize access to the shared nPoints vector
+                #pragma omp flush
+                #pragma omp atomic
+                nPoints[nearestClusterId]++;
+                #pragma omp flush
             }
 
-            #pragma omp barrier
-
-            // Recalculating the centroid of each cluster
-            int clusterSize;
-            // parallelize for, each thread takes a cluster
+            // Recalculate the centroid of each cluster and reset sums and nPoints
             #pragma omp for
-            for (int i = 0; i < K; i++) {
-                clusterSize = clusters[i].getSize();
-
-                for (int j = 0; j < dimensions; j++) {
-                    double sum = 0.0;
-                    if (clusterSize > 0) {
-                        for (int p = 0; p < clusterSize; p++) {
-                            sum += clusters[i].getPoint(p).getCoord(j);
-                        }
-                        clusters[i].setCentroidByPos(j, sum / clusterSize);
-                    }
+            for (int c = 0; c < K; c++) {
+                for (int dim = 0; dim < dimensions; dim++) {
+                    clusters[c].setCentroidByPos(dim, sums[c][dim] / nPoints[c]);
+                    sums[c][dim] = 0;
                 }
+                nPoints[c] = 0;
             }
 
         }
@@ -288,7 +258,7 @@ double KMeans::runPar( const std::string& output_dir, const std::string& origina
     return time.count();
 }
 
-double KMeans::runParReduction( const std::string& output_dir, const std::string& original_filename){
+double KMeans::runParPrivate( const std::string& output_dir, const std::string& original_filename, int threads){
     typedef std::chrono::high_resolution_clock Clock;
     auto t1 = Clock::now();
 
@@ -296,7 +266,7 @@ double KMeans::runParReduction( const std::string& output_dir, const std::string
     int index = getRandomIndex((int)points.size(), 111);
     // cluster numbered from 0 to k-1
     points[index].setCluster(0);
-    Cluster cluster(0, points[index]);
+    Cluster cluster(0, points[index].getCoordinates());
     clusters.push_back(cluster);
 
     std::vector<double>distances;
@@ -318,75 +288,74 @@ double KMeans::runParReduction( const std::string& output_dir, const std::string
         // select the point that is the furthest from all the other clusters as a new centroid
         index = std::max_element(distances.begin(), distances.end())-distances.begin();
         points[index].setCluster(i);
-        Cluster cluster(i, points[index]);
+        Cluster cluster(i, points[index].getCoordinates());
         clusters.push_back(cluster);
     }
+
     printf( "Initialized %d clusters \n", (int)clusters.size() );
 
     printf("Running K-Means Clustering.. \n");
 
-    for (int iter = 1; iter<=iters; iter++) {
-        printf("Iteration %d/%d \n", iter, iters);
+    // Initialize the sums of each cluster and their number of points
+    std::vector<std::vector<double> > sums(K,std::vector<double>(dimensions));
+    std::vector<int> nPoints(K);
 
-        // removes all points from the clusters (the centroids coordinates are not deleted)
-        clearClusters();
+    for (int iter = 1; iter<=iters; iter++)
+    {
+        printf( "Iteration %d/%d \n", iter, iters);
+#pragma omp parallel default(none) shared(points, clusters, sums, nPoints) num_threads(threads)
+        {   // Each thread has its on sums and nPoints
+            std::vector<std::vector<double> > sumsPrivate(K,std::vector<double>(dimensions));
+            std::vector<int> nPointsPrivate(K);
 
-#pragma omp parallel default(none) shared(points, clusters,dimensions)
-        {   // Add all points to their nearest cluster
-            // each thread can handle its points and has its local clusters (fake, we don't need all their functions)
-            int currentClusterId, nearestClusterId;
-            std::vector<fakeCluster> localClusters;
-            for (int i = 0; i < K; i++) {
-                fakeCluster local_cluster = {i,};
-                localClusters.push_back(local_cluster);
-            }
-            // parallelize for cycle,
+            // Calculate each point's new cluster ID and accumulate the private sums of each cluster's coordinates
             #pragma omp for nowait
             for (auto &point: points) {
-                currentClusterId = point.getCluster();
-                nearestClusterId = getNearestClusterId(point);
+                int currentClusterId = point.getCluster();
+                int nearestClusterId = getNearestClusterId(point);
 
                 if (currentClusterId != nearestClusterId) {
                     point.setCluster(nearestClusterId);
                 }
-
-                localClusters[nearestClusterId].points.push_back(point);
-            }
-            // synchronize the local clusters, add the points to the real clusters
-            #pragma omp critical
-            {
-                for (int i = 0; i < K; i++) {
-                    clusters[i].addPoints(localClusters[i].points);
+                for (int dim = 0; dim < dimensions; dim++) {
+                    sumsPrivate[nearestClusterId][dim] += point.getCoord(dim);
                 }
+                nPointsPrivate[nearestClusterId]++;
+            }
+
+            // Accumulate all the private sums and nPoints, synchronize after each threads finishes accumulating the private sums
+            for (int c = 0; c < K; c++) {
+                for (int dim = 0; dim < dimensions; dim++) {
+                    #pragma omp flush
+                    #pragma omp atomic
+                    sums[c][dim] += sumsPrivate[c][dim];
+                    #pragma omp flush
+                }
+                #pragma omp flush
+                #pragma omp atomic
+                nPoints[c] += nPointsPrivate[c];
+                #pragma omp flush
+            }
+
+            // wait until all the sums and nPoints have been calculated
+            #pragma omp barrier
+
+            // Recalculate the centroid of each cluster and reset sums and nPoints
+            #pragma omp for
+            for (int c = 0; c < K; c++) {
+                for (int dim = 0; dim < dimensions; dim++) {
+                    clusters[c].setCentroidByPos(dim, sums[c][dim] / nPoints[c]);
+                    sums[c][dim] = 0;
+                }
+                nPoints[c] = 0;
             }
         }
-
-            // Recalculating the centroid of each cluster
-            int clusterSize;
-            for (int i = 0; i < K; i++) {
-                clusterSize = clusters[i].getSize();
-
-                for (int j = 0; j < dimensions; j++) {
-                    double sum = 0.0;
-                    if (clusterSize > 0) {
-                        // use reduction to calculate the sum using all the threads
-                        #pragma omp parallel for default(none) shared(clusterSize) firstprivate(i,j) reduction(+: sum)
-                        for (int p = 0; p < clusterSize; p++) {
-                            sum += clusters[i].getPoint(p).getCoord(j);
-                        }
-                        clusters[i].setCentroidByPos(j, sum / clusterSize);
-                    }
-                }
-            }
-
-        }
-
+    }
     auto t2 = Clock::now();
     std::chrono::duration<double, std::milli> time = t2 - t1;
-
     printf("Clustering completed \n");
 
-    createOutputFile(output_dir, original_filename, "par_red");
+    createOutputFile(output_dir, original_filename, "par_priv");
 
     return time.count();
 }

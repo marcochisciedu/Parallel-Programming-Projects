@@ -4,6 +4,8 @@
 
 #include "Cluster.h"
 
+#include <utility>
+
 Point::Point(int id, std::string line){
     pointId = id;
     coordinates = lineToVec(line);
@@ -36,21 +38,9 @@ std::vector<double> Point::lineToVec(std::string &line){
     return coordinates;
 }
 
-Cluster::Cluster(int clusterId, const Point& centroid)
+Cluster::Cluster(int clusterId, std::vector<double> centroid)
 {
     this->clusterId = clusterId;
-    for (int i = 0; i < centroid.getDimensions(); i++)
-    {
-        this->centroid.push_back(centroid.getCoord(i));
-    }
-    this->addPoint(centroid);
+    this->centroid = std::move(centroid);
 }
 
-void Cluster::addPoint(Point p) {
-        p.setCluster(this->clusterId);
-        points.push_back(p);
-}
-
-void Cluster::addPoints(std::vector<Point> ps){
-    points.insert(points.end(), ps.begin(), ps.end());
-}
