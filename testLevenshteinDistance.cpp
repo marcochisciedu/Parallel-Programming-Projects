@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <chrono>
+#include <omp.h>
 
 // measure the time to run given a checkVocabulary function
 double time_checkVocab(const std::vector<std::string>& words, const std::string& string,
@@ -96,33 +97,71 @@ void testLevenshteinDistance(const std::string& filename, const std::string& str
 
 int main(){
     // code to generate txt file with random strings
-    //generate_random_txt("10milRand60.txt", 10000000, 60, 11);
+    //generate_random_txt("100000Rand60.txt", 100000, 60, 11);
     // code to generate txt file with a given percentage of similar words
-    //generate_similar_txt("10mil50Short", 100000000, 50, 11 );
+    //generate_similar_txt("100mil50Short", 100000000, 50, 11 );
 
-    //testLevenshteinDistance("vocabularies/10mil80Short.txt", "dd", 1, 10, false);
-    testLevenshteinDistance("vocabularies/German.txt",
-                            "Korrespondenzbankenabteilungen", 1, 10, true);
 
-    /*testLevenshteinDistance("vocabularies/all_Languages.txt",
-                             "Korrespondenzbankenabteilungen", 5);
+    //testing the increase in number of strings, different sizes
+    testLevenshteinDistance("vocabularies/all_Languages.txt",
+                            "Korrespondenzbankenabteilungen", 5, 64, true);
 
     testLevenshteinDistance("vocabularies/all_Languages_2.txt",
-                            "Korrespondenzbankenabteilungen", 5);
+                            "Korrespondenzbankenabteilungen", 5, 64, true);
 
     testLevenshteinDistance("vocabularies/all_Languages_10.txt",
-                            "Korrespondenzbankenabteilungen", 5);
+                            "Korrespondenzbankenabteilungen", 5, 64, true);
+
+    testLevenshteinDistance("vocabularies/all_Languages_50.txt",
+                            "Korrespondenzbankenabteilungen", 2, 64, true);
+
+
+    // test different sizes and dimensions
+    testLevenshteinDistance("vocabularies/100000Rand30.txt",
+                            "Korrespondenzbankenabteilungen", 5, 64, true);
 
     testLevenshteinDistance("vocabularies/1milRand30.txt",
-                            "asfsafsafafwasxfsafsasafsafsafsfsaw", 5);
-
-    testLevenshteinDistance("vocabularies/1milRand60.txt",
-                            "asfsafsafafwasxfsafsasafsafsafsfsaw", 5);
+                            "Korrespondenzbankenabteilungen", 5, 64, true);
 
     testLevenshteinDistance("vocabularies/10milRand30.txt",
-                            "asfsafsafafwasxfsafsasafsafsafsfsaw", 5);
+                            "Korrespondenzbankenabteilungen", 5, 64, true);
+
+    testLevenshteinDistance("vocabularies/100000Rand60.txt",
+                            "Korrespondenzbankenabteilungen", 5, 64, true);
+
+    testLevenshteinDistance("vocabularies/1milRand60.txt",
+                            "Korrespondenzbankenabteilungen", 5, 64, true);
 
     testLevenshteinDistance("vocabularies/10milRand60.txt",
-                            "asfsafsafafwasxfsafsasafsafsafsfsaw", 5); */
+                            "Korrespondenzbankenabteilungen", 5, 64, true);
+
+    // test with similar strings
+    testLevenshteinDistance("vocabularies/10mil20Percent.txt",
+                            "dddddddddddddddddddddddddddddd", 5, 64, false);
+    testLevenshteinDistance("vocabularies/10mil50Percent.txt",
+                            "dddddddddddddddddddddddddddddd", 5, 64, false);
+    testLevenshteinDistance("vocabularies/10mil80Percent.txt",
+                            "dddddddddddddddddddddddddddddd", 5, 64, false);
+
+    testLevenshteinDistance("vocabularies/100mil20Short.txt",
+                            "dd", 5, 64, false);
+    testLevenshteinDistance("vocabularies/100mil50Short.txt",
+                            "dd", 5, 64, false);
+    testLevenshteinDistance("vocabularies/100mil80Short.txt",
+                            "dd", 5, 64, false);
+
+    // test with different number of Threads
+    testLevenshteinDistance("vocabularies/10milRand60.txt",
+                            "Korrespondenzbankenabteilungen", 5, 2, true);
+    testLevenshteinDistance("vocabularies/10milRand60.txt",
+                            "Korrespondenzbankenabteilungen", 5, 4, true);
+    testLevenshteinDistance("vocabularies/10milRand60.txt",
+                            "Korrespondenzbankenabteilungen", 5, 8, true);
+    testLevenshteinDistance("vocabularies/10milRand60.txt",
+                            "Korrespondenzbankenabteilungen", 5, 16, true);
+    testLevenshteinDistance("vocabularies/10milRand60.txt",
+                            "Korrespondenzbankenabteilungen", 5, 32, true);
+    testLevenshteinDistance("vocabularies/10milRand60.txt",
+                            "Korrespondenzbankenabteilungen", 5, 128, true);
     return 0;
 }

@@ -1,36 +1,105 @@
-Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/all_Languages.txt
-Mean milliseconds sequential: 60050.5
-Mean milliseconds parallel with more critical sections: 28147 mean speedup: 2.13535
-Mean milliseconds parallel with one final critical section: 28677.2 mean speedup: 2.10823
+Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/all_Languages.txt with 64 threads
+Mean milliseconds sequential: 56273.3
+Mean milliseconds parallel with more critical sections: 2212.79 mean speedup: 25.4411
+Mean milliseconds parallel with one final critical section: 2178.76 mean speedup: 25.8286
 
-Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/all_Languages_2.txt
-Mean milliseconds sequential: 120192
-Mean milliseconds parallel with more critical sections: 54525.9 mean speedup: 2.20436
-Mean milliseconds parallel with one final critical section: 54536.8 mean speedup: 2.20457
+Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/all_Languages_2.txt with 64 threads 
+Mean milliseconds sequential: 112328
+Mean milliseconds parallel with more critical sections: 4364.48 mean speedup: 25.7383
+Mean milliseconds parallel with one final critical section: 4338.24 mean speedup: 25.8939
 
-Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/all_Languages_10.txt
-Mean milliseconds sequential: 614395
-Mean milliseconds parallel with more critical sections: 267448 mean speedup: 2.29712
-Mean milliseconds parallel with one final critical section: 266866 mean speedup: 2.30335
+Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/all_Languages_10.txt with 64 threads 
+Mean milliseconds sequential: 561606
+Mean milliseconds parallel with more critical sections: 20579.9 mean speedup: 27.2893
+Mean milliseconds parallel with one final critical section: 20523.9 mean speedup: 27.3644
 
-Selected string: asfsafsafafwasxfsafsasafsafsafsfsaw searched in file: vocabularies/1milRand30.txt
-Mean milliseconds sequential: 14490.3
-Mean milliseconds parallel with more critical sections: 6747.68 mean speedup: 2.1507
-Mean milliseconds parallel with one final critical section: 6664.42 mean speedup: 2.17542
+Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/100000Rand30.txt with 64 threads
+Mean milliseconds sequential: 306.19
+Mean milliseconds parallel with more critical sections: 14.8165 mean speedup: 21.0918
+Mean milliseconds parallel with one final critical section: 12.4905 mean speedup: 24.5439
 
-Selected string: asfsafsafafwasxfsafsasafsafsafsfsaw searched in file: vocabularies/1milRand60.txt
-Mean milliseconds sequential: 26699.6
-Mean milliseconds parallel with more critical sections: 12450.7 mean speedup: 2.14583
-Mean milliseconds parallel with one final critical section: 12338.9 mean speedup: 2.1643
+Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/1milRand30.txt with 64 threads 
+Mean milliseconds sequential: 11231.4
+Mean milliseconds parallel with more critical sections: 496.56 mean speedup: 22.6528
+Mean milliseconds parallel with one final critical section: 486.969 mean speedup: 23.3495
 
-Selected string: asfsafsafafwasxfsafsasafsafsafsfsaw searched in file: vocabularies/10milRand30.txt
-Mean milliseconds sequential: 134484
-Mean milliseconds parallel with more critical sections: 63082.8 mean speedup: 2.13204
-Mean milliseconds parallel with one final critical section: 63492.5 mean speedup: 2.11814
+Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/10milRand30.txt with 64 threads 
+Mean milliseconds sequential: 112363
+Mean milliseconds parallel with more critical sections: 4384.72 mean speedup: 25.6444
+Mean milliseconds parallel with one final critical section: 4301.8 mean speedup: 26.1514
 
-Selected string: asfsafsafafwasxfsafsasafsafsafsfsaw searched in file: vocabularies/10milRand60.txt
-Mean milliseconds sequential: 264186
-Mean milliseconds parallel with more critical sections: 122930 mean speedup: 2.14914
-Mean milliseconds parallel with one final critical section: 121632 mean speedup: 2.17187
+Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/100000Rand60.txt with 64 threads 
+Mean milliseconds sequential: 289.83
+Mean milliseconds parallel with more critical sections: 13.5204 mean speedup: 22.1895
+Mean milliseconds parallel with one final critical section: 12.2374 mean speedup: 23.9347
 
+Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/1milRand60.txt with 64 threads 
+Mean milliseconds sequential: 21401.2
+Mean milliseconds parallel with more critical sections: 938.481 mean speedup: 22.8898
+Mean milliseconds parallel with one final critical section: 893.856 mean speedup: 24.0446
+
+Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/10milRand60.txt with 64 threads 
+Mean milliseconds sequential: 214500
+Mean milliseconds parallel with more critical sections: 8415.98 mean speedup: 25.4873
+Mean milliseconds parallel with one final critical section: 8381.86 mean speedup: 25.5917
+
+Selected string: dddddddddddddddddddddddddddddd searched in file: vocabularies/10mil20Percent.txt with 64 threads
+Mean milliseconds sequential: 92210.5
+Mean milliseconds parallel with more critical sections: 4116.68 mean speedup: 22.4174
+Mean milliseconds parallel with one final critical section: 4090.05 mean speedup: 22.5459
+
+Selected string: dddddddddddddddddddddddddddddd searched in file: vocabularies/10mil50Percent.txt with 64 threads
+Mean milliseconds sequential: 76332.3
+Mean milliseconds parallel with more critical sections: 4812.96 mean speedup: 15.8713
+Mean milliseconds parallel with one final critical section: 3685.25 mean speedup: 20.7542
+
+Selected string: dddddddddddddddddddddddddddddd searched in file: vocabularies/10mil80Percent.txt with 64 threads
+Mean milliseconds sequential: 60270.3
+Mean milliseconds parallel with more critical sections: 7042.09 mean speedup: 8.56517
+Mean milliseconds parallel with one final critical section: 3199.01 mean speedup: 18.8484
+
+Selected string: dd searched in file: vocabularies/100mil20Short.txt with 64 threads
+Mean milliseconds sequential: 9103.3
+Mean milliseconds parallel with more critical sections: 13863.3 mean speedup: 0.656917
+Mean milliseconds parallel with one final critical section: 2175.43 mean speedup: 4.18918
+
+Selected string: dd searched in file: vocabularies/100mil50Short.txt with 64 threads
+Mean milliseconds sequential: 10847.8
+Mean milliseconds parallel with more critical sections: 38529.8 mean speedup: 0.281582
+Mean milliseconds parallel with one final critical section: 3921.56 mean speedup: 2.76775
+
+Selected string: dd searched in file: vocabularies/100mil80Short.txt with 64 threads
+Mean milliseconds sequential: 13941.5
+Mean milliseconds parallel with more critical sections: 71679.2 mean speedup: 0.197802
+Mean milliseconds parallel with one final critical section: 6747.12 mean speedup: 2.06712
+
+Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/10milRand60.txt with 2 threads 
+Mean milliseconds sequential: 214220
+Mean milliseconds parallel with more critical sections: 107849 mean speedup: 1.98648
+Mean milliseconds parallel with one final critical section: 107915 mean speedup: 1.98527
+
+Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/10milRand60.txt with 4 threads 
+Mean milliseconds sequential: 213158
+Mean milliseconds parallel with more critical sections: 53599.3 mean speedup: 3.97692
+Mean milliseconds parallel with one final critical section: 53367.6 mean speedup: 3.99417
+
+Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/10milRand60.txt with 8 threads 
+Mean milliseconds sequential: 213421
+Mean milliseconds parallel with more critical sections: 27006.2 mean speedup: 7.90275
+Mean milliseconds parallel with one final critical section: 27005.3 mean speedup: 7.90433
+
+Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/10milRand60.txt with 16 threads 
+Mean milliseconds sequential: 213006
+Mean milliseconds parallel with more critical sections: 14161.7 mean speedup: 15.0423
+Mean milliseconds parallel with one final critical section: 14115.8 mean speedup: 15.0935
+
+Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/10milRand60.txt with 32 threads 
+Mean milliseconds sequential: 213186
+Mean milliseconds parallel with more critical sections: 8762.35 mean speedup: 24.5631
+Mean milliseconds parallel with one final critical section: 8021.9 mean speedup: 26.5807
+
+Selected string: Korrespondenzbankenabteilungen searched in file: vocabularies/10milRand60.txt with 128 threads 
+Mean milliseconds sequential: 213978
+Mean milliseconds parallel with more critical sections: 8666.9 mean speedup: 24.6902
+Mean milliseconds parallel with one final critical section: 8646.7 mean speedup: 24.7481
 
