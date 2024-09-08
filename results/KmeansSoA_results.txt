@@ -35,19 +35,19 @@ On average, the parallel version of kmeans completed in 572868 milliseconds with
 On average, the private parallel version of kmeans completed in 614220 milliseconds with a 3.36198 speedup
 
 Searching for 8 clusters in 1000002d with 100 iterations and 64 threads
-On average, the sequential version of kmeans completed in 1722.33 milliseconds
-On average, the parallel version of kmeans completed in 444.739 milliseconds with a 4.08839 speedup
-On average, the private parallel version of kmeans completed in 128.422 milliseconds with a 13.4129 speedup
+On average, the sequential version of kmeans completed in 5601.56 milliseconds
+On average, the parallel version of kmeans completed in 1161.84 milliseconds with a 4.82352 speedup
+On average, the private parallel version of kmeans completed in 389.835 milliseconds with a 14.3689 speedup
 
 Searching for 8 clusters in 1000004d with 100 iterations and 64 threads
-On average, the sequential version of kmeans completed in 1895.33 milliseconds
-On average, the parallel version of kmeans completed in 359.333 milliseconds with a 5.54671 speedup
-On average, the private parallel version of kmeans completed in 122.689 milliseconds with a 15.4496 speedup
+On average, the sequential version of kmeans completed in 12177.7 milliseconds
+On average, the parallel version of kmeans completed in 2245.7 milliseconds with a 5.52085 speedup
+On average, the private parallel version of kmeans completed in 747.547 milliseconds with a 16.2911 speedup
 
 Searching for 8 clusters in 1000008d with 100 iterations and 64 threads
-On average, the sequential version of kmeans completed in 2072.93 milliseconds
-On average, the parallel version of kmeans completed in 245.247 milliseconds with a 8.48584 speedup
-On average, the private parallel version of kmeans completed in 133.089 milliseconds with a 15.5774 speedup
+On average, the sequential version of kmeans completed in 24819.2 milliseconds
+On average, the parallel version of kmeans completed in 3326.35 milliseconds with a 7.61344 speedup
+On average, the private parallel version of kmeans completed in 1481.85 milliseconds with a 16.7532 speedup
 
 Searching for 8 clusters in 1mil2d with 100 iterations and 64 threads
 On average, the sequential version of kmeans completed in 60572.5 milliseconds
@@ -108,4 +108,6 @@ Searching for 8 clusters in 1mil8d with 100 iterations and 128 threads
 On average, the sequential version of kmeans completed in 245752 milliseconds
 On average, the parallel version of kmeans completed in 25621.3 milliseconds with a 9.64558 speedup
 On average, the private parallel version of kmeans completed in 16006.2 milliseconds with a 15.3536 speedup
+
+
 
