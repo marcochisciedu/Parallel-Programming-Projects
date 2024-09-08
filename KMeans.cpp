@@ -87,7 +87,6 @@ int getRandomIndex(int size, int seed){
 double KMeans::runSeq( const std::string& output_dir, const std::string& original_filename){
     typedef std::chrono::high_resolution_clock Clock;
     auto t1 = Clock::now();
-
     // Initializing Clusters, select the first cluster
     int index = getRandomIndex((int)points.size(), 111);
     // cluster numbered from 0 to k-1
@@ -128,7 +127,7 @@ double KMeans::runSeq( const std::string& output_dir, const std::string& origina
 
     for (int iter = 1; iter<=iters; iter++)
     {
-        printf( "Iteration %d/%d \n", iter, iters);
+        //printf( "Iteration %d/%d \n", iter, iters);
 
         // Add all points to their nearest cluster and calculate the sums and nPoints
         for (auto & point : points)
@@ -208,7 +207,7 @@ double KMeans::runPar( const std::string& output_dir, const std::string& origina
     std::vector<int> nPoints(K);
 
     for (int iter = 1; iter<=iters; iter++) {
-        printf("Iteration %d/%d \n", iter, iters);
+        //printf("Iteration %d/%d \n", iter, iters);
 
 #pragma omp parallel default(none) shared(sums, nPoints, points, clusters,dimensions) num_threads(threads)
         {   // Add all points to their nearest cluster and accumulate the sums of each cluster's coordinates
@@ -302,7 +301,7 @@ double KMeans::runParPrivate( const std::string& output_dir, const std::string& 
 
     for (int iter = 1; iter<=iters; iter++)
     {
-        printf( "Iteration %d/%d \n", iter, iters);
+        //printf( "Iteration %d/%d \n", iter, iters);
 #pragma omp parallel default(none) shared(points, clusters, sums, nPoints) num_threads(threads)
         {   // Each thread has its on sums and nPoints
             std::vector<std::vector<double> > sumsPrivate(K,std::vector<double>(dimensions));
