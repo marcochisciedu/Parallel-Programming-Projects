@@ -39,8 +39,7 @@ On average, the parallel version of kmeans completed in 140843 milliseconds with
 On average, the parallel version of kmeans with reduction completed in 80003.2 milliseconds with a 16.5463 speedup
 
 Searching for 8 clusters in 10mil8d with 100 iterations and 64 threads
-Searching for 8 clusters in 10mil8d with 100 iterations and 64 threads
-The files are the same
-The files are the same
-The files are the same
-The files are the same
+On average, the sequential version of kmeans completed in 2.66531e+06 milliseconds
+On average, the parallel version of kmeans completed in 193072 milliseconds with a 13.805 speedup
+On average, the parallel version of kmeans with reduction completed in 156788 milliseconds with a 16.9994 speedup
+
