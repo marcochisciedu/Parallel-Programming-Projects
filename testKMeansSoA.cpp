@@ -99,9 +99,36 @@ void testKMeans(const std::string& filename, const int& k, const int& iters_kmea
 
 int main(int argc, char **argv){
     // code to generate random csv files with coordinates to clusters
-    //generate_random_csv("10mil8d.csv", 10000000, 8, 11);
+    //generate_random_csv("1000002d.csv", 100000, 2, 11);
 
-    testKMeans("1mil8d", 8 , 5, 1, 10);
+    // test different k
+    testKMeans("1mil8d", 2 , 100, 5, 64);
+    testKMeans("1mil8d", 4 , 100, 5, 64);
+    testKMeans("1mil8d", 8 , 100, 5, 64);
+    testKMeans("1mil8d", 16 , 100, 5, 64);
+    testKMeans("1mil8d", 25 , 100, 5, 64);
+    testKMeans("1mil8d", 32 , 100, 5, 64);
+    testKMeans("1mil8d", 64 , 100, 5, 64);
 
+    // testing different dimensions and sizes
+    testKMeans("1000002d", 8 , 100, 5, 64);
+    testKMeans("1000004d", 8 , 100, 5, 64);
+    testKMeans("1000008d", 8 , 100, 5, 64);
+
+    testKMeans("1mil2d", 8 , 100, 5, 64);
+    testKMeans("1mil4d", 8 , 100, 5, 64);
+    testKMeans("1mil8d", 8 , 100, 5, 64);
+
+    testKMeans("10mil2d", 8 , 100, 5, 64);
+    testKMeans("10mil4d", 8 , 100, 5, 64);
+    testKMeans("10mil8d", 8 , 100, 5, 64);
+
+    // test different number of threads
+    testKMeans("1mil8d", 8 , 100, 5, 2);
+    testKMeans("1mil8d", 8 , 100, 5, 4);
+    testKMeans("1mil8d", 8 , 100, 5, 8);
+    testKMeans("1mil8d", 8 , 100, 5, 16);
+    testKMeans("1mil8d", 8 , 100, 5, 32);
+    testKMeans("1mil8d", 8 , 100, 5, 128);
     return 0;
 }

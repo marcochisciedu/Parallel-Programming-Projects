@@ -130,7 +130,7 @@ double KMeansSoA::runSeq( const std::string& output_dir, const std::string& orig
 
     for (int iter = 1; iter<=iters; iter++)
     {
-        printf( "Iteration %d/%d \n", iter, iters);
+        //printf( "Iteration %d/%d \n", iter, iters);
 
         // Calculate each point's new cluster ID and accumulate the sums of each cluster's coordinates
         for (int p =0; p<points.getNumPoints(); p++)
@@ -209,7 +209,7 @@ double KMeansSoA::runPar( const std::string& output_dir, const std::string& orig
     std::vector<int> nPoints(K);
 
     for (int iter = 1; iter<=iters; iter++)
-    {   printf( "Iteration %d/%d \n", iter, iters);
+    {   //printf( "Iteration %d/%d \n", iter, iters);
 
 #pragma omp parallel default(none) shared(points, clusters, sums, nPoints) num_threads(threads)
         {   // Calculate each point's new cluster ID and accumulate the sums of each cluster's coordinates
@@ -302,7 +302,7 @@ double KMeansSoA::runParPrivate( const std::string& output_dir, const std::strin
 
     for (int iter = 1; iter<=iters; iter++)
     {
-        printf( "Iteration %d/%d \n", iter, iters);
+        //printf( "Iteration %d/%d \n", iter, iters);
 #pragma omp parallel default(none) shared(points, clusters, sums, nPoints) num_threads(threads)
         {   // Each thread has its own private sums and nPoints
             std::vector<std::vector<double> > sumsPrivate(K,std::vector<double>(points.getNumDimensions()));

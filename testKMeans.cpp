@@ -121,17 +121,18 @@ int main(int argc, char **argv){
     // code to generate random csv files with coordinates to clusters
     //generate_random_csv("10mil8d.csv", 10000000, 8, 11);
 
-    testKMeans("1mil8d", 8 ,5,1, 10);
-    /*testKMeans("1mil2d" , 4 , 100 , 5);
+    // testing different dimensions and sizes
+    testKMeans("1000002d", 8 , 100, 5, 64);
+    testKMeans("1000004d", 8 , 100, 5, 64);
+    testKMeans("1000008d", 8 , 100, 5, 64);
 
-    testKMeans("1mil2d" , 8 , 100 , 5);
+    testKMeans("1mil2d", 8 , 100, 5, 64);
+    testKMeans("1mil4d", 8 , 100, 5, 64);
+    testKMeans("1mil8d", 8 , 100, 5, 64);
 
-    testKMeans("1mil4d" , 8 , 100 , 5);
-
-    testKMeans("1mil8d" , 8 , 100 , 5);
-
-    testKMeans("10mil2d" , 8 , 100 , 5);
-    */
+    testKMeans("10mil2d", 8 , 100, 5, 64);
+    testKMeans("10mil4d", 8 , 100, 5, 64);
+    testKMeans("10mil8d", 8 , 100, 5, 64);
 
     return 0;
 }
