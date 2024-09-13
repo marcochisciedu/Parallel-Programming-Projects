@@ -224,16 +224,12 @@ double KMeansSoA::runPar( const std::string& output_dir, const std::string& orig
                 }
                 for (int dim = 0; dim < points.getNumDimensions(); dim++) {
                 // synchronize access to the shared sums matrix
-                    #pragma omp flush
-                    #pragma omp atomic
+                    #pragma omp atomic update
                     sums[nearestClusterId][dim] += points(p, dim);
-                    #pragma omp flush
                 }
                 // synchronize access to the shared nPoints vector
-                #pragma omp flush
-                #pragma omp atomic
+                #pragma omp atomic update
                 nPoints[nearestClusterId]++;
-                #pragma omp flush
             }
 
             // Recalculate the centroid of each cluster and reset sums and nPoints
@@ -327,15 +323,11 @@ double KMeansSoA::runParPrivate( const std::string& output_dir, const std::strin
             // Accumulate all the private sums and nPoints, synchronize after each threads finishes accumulating the private sums
             for (int c = 0; c < K; c++) {
                     for (int dim = 0; dim < points.getNumDimensions(); dim++) {
-                    #pragma omp flush
-                    #pragma omp atomic
+                    #pragma omp atomic update
                         sums[c][dim] += sumsPrivate[c][dim];
-                    #pragma omp flush
                     }
-            #pragma omp flush
-            #pragma omp atomic
+            #pragma omp atomic update
                 nPoints[c] += nPointsPrivate[c];
-            #pragma omp flush
             }
 
             // wait until all the sums and nPoints have been calculated

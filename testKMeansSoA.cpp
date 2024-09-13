@@ -108,7 +108,6 @@ int main(int argc, char **argv){
     testKMeans("1mil8d", 16 , 100, 5, 64);
     testKMeans("1mil8d", 25 , 100, 5, 64);
     testKMeans("1mil8d", 32 , 100, 5, 64);
-    testKMeans("1mil8d", 64 , 100, 5, 64);
 
     // testing different dimensions and sizes
     testKMeans("1000002d", 8 , 100, 5, 64);

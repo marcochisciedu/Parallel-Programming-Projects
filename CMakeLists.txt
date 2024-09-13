@@ -38,11 +38,6 @@ set(SOURCE_FILES KMeansSoA.cpp
         PointsSoA.cpp
         PointsSoA.h
         testKMeansSoA.cpp
-        KMeans.cpp
-        KMeans.h
-        Cluster.cpp
-        Cluster.h
-        testKMeans.cpp
         LevenshteinDistance.h
         LevenshteinDistance.cpp
         checkVocabularySeq.cpp
@@ -50,15 +45,6 @@ set(SOURCE_FILES KMeansSoA.cpp
         checkVocabularyPar.cpp
         checkVocabularyPar.h
         testLevenshteinDistance.cpp
-        generateData.cpp
-        generateData.h)
-
-add_executable(Kmeans_clustering
-        testKMeans.cpp
-        KMeans.cpp
-        KMeans.h
-        Cluster.cpp
-        Cluster.h
         generateData.cpp
         generateData.h)
 
