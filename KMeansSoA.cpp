@@ -122,8 +122,6 @@ double KMeansSoA::runSeq( const std::string& output_dir, const std::string& orig
     }
     printf( "Initialized %d clusters \n", (int)clusters.size() );
 
-    printf("Running K-Means Clustering.. \n");
-
     // Initialize the sums of each cluster's coordinates and their number of points
     std::vector<std::vector<double> > sums(K,std::vector<double>(points.getNumDimensions()));
     std::vector<int> nPoints(K);
@@ -178,31 +176,44 @@ double KMeansSoA::runPar( const std::string& output_dir, const std::string& orig
     clusters.push_back(cluster);
 
     std::vector<double>distances;
+    std::vector<int>indices;
     // kmeans++ initialization for the other clusters
     for (int i = 1; i < K; i++){
         distances.clear();
+        indices.clear();
         // find the closest existing cluster to each point, select the furthest
-        for (int p =0; p<points.getNumPoints(); p++){
-            double dist = 0.0;
-            // iterate through all the previously found centroids
-            for (int j = 0; j < i; j++) {
-                double  sum = 0.0;
-                for (int dim = 0; dim < points.getNumDimensions(); dim++) {
-                    sum += pow(clusters[j].getCentroidCoordByPos(dim) - points(p,dim), 2.0);
+#pragma omp parallel default(none) shared(distances,i, points, clusters, indices)  num_threads(threads)
+        {   std::vector<double>privateDistances;
+            std::vector<int>privateIndices;
+            #pragma omp for
+            for (int p = 0; p < points.getNumPoints(); p++) {
+                double dist = 0.0;
+                // iterate through all the previously found centroids
+                for (int j = 0; j < i; j++) {
+                    double sum = 0.0;
+                    for (int dim = 0; dim < points.getNumDimensions(); dim++) {
+                        sum += pow(clusters[j].getCentroidCoordByPos(dim) - points(p, dim), 2.0);
+                    }
+                    dist += sqrt(sum);
                 }
-                dist += sqrt(sum);
+                privateDistances.push_back(dist);
+                // collect the local indices to know the original index of each distance
+                privateIndices.push_back(p);
             }
-            distances.push_back(dist);
+            // synchronize all the threads, collect all the distances and their original indices
+            #pragma omp critical
+            {
+                distances.insert(distances.end(), privateDistances.begin(), privateDistances.end());
+                indices.insert(indices.end(), privateIndices.begin(), privateIndices.end());
+            }
         }
         // select the point that is the furthest from all the other clusters as a new centroid
         index = std::max_element(distances.begin(), distances.end())-distances.begin();
-        points.setClusterIdByIndex(index,i);
-        Cluster cluster(i, indexToCoordinates(index));
+        points.setClusterIdByIndex(indices[index],i);
+        Cluster cluster(i, indexToCoordinates(indices[index]));
         clusters.push_back(cluster);
     }
     printf( "Initialized %d clusters \n", (int)clusters.size() );
-
-    printf("Running K-Means Clustering.. \n");
 
     // Initialize the sums of each cluster's coordinates and their number of points
     std::vector<std::vector<double> > sums(K,std::vector<double>(points.getNumDimensions()));
@@ -265,32 +276,45 @@ double KMeansSoA::runParPrivate( const std::string& output_dir, const std::strin
     clusters.push_back(cluster);
 
     std::vector<double>distances;
+    std::vector<int>indices;
     // kmeans++ initialization for the other clusters
     for (int i = 1; i < K; i++){
         distances.clear();
+        indices.clear();
         // find the closest existing cluster to each point, select the furthest
-        for (int p =0; p<points.getNumPoints(); p++){
-            double dist = 0.0;
-            // iterate through all the previously found centroids
-            for (int j = 0; j < i; j++) {
-                double  sum = 0.0;
-                for (int dim = 0; dim < points.getNumDimensions(); dim++) {
-                    sum += pow(clusters[j].getCentroidCoordByPos(dim) - points(p,dim), 2.0);
+#pragma omp parallel default(none) shared(distances,i, points, clusters, indices)  num_threads(threads)
+        {   std::vector<double>privateDistances;
+            std::vector<int>privateIndices;
+            #pragma omp for
+            for (int p = 0; p < points.getNumPoints(); p++) {
+                double dist = 0.0;
+                // iterate through all the previously found centroids
+                for (int j = 0; j < i; j++) {
+                    double sum = 0.0;
+                    for (int dim = 0; dim < points.getNumDimensions(); dim++) {
+                        sum += pow(clusters[j].getCentroidCoordByPos(dim) - points(p, dim), 2.0);
+                    }
+                    dist += sqrt(sum);
                 }
-                dist += sqrt(sum);
+                privateDistances.push_back(dist);
+                // collect the local indices to know the original index of each distance
+                privateIndices.push_back(p);
             }
-            distances.push_back(dist);
+            // synchronize all the threads, collect all the distances and their original indices
+            #pragma omp critical
+            {
+                distances.insert(distances.end(), privateDistances.begin(), privateDistances.end());
+                indices.insert(indices.end(), privateIndices.begin(), privateIndices.end());
+            }
         }
         // select the point that is the furthest from all the other clusters as a new centroid
         index = std::max_element(distances.begin(), distances.end())-distances.begin();
-        points.setClusterIdByIndex(index,i);
-        Cluster cluster(i, indexToCoordinates(index));
+        points.setClusterIdByIndex(indices[index],i);
+        Cluster cluster(i, indexToCoordinates(indices[index]));
         clusters.push_back(cluster);
     }
 
     printf( "Initialized %d clusters \n", (int)clusters.size() );
-
-    printf("Running K-Means Clustering.. \n");
 
     // Initialize the sums of each cluster's coordinates and their number of points
     std::vector<std::vector<double> > sums(K,std::vector<double>(points.getNumDimensions()));

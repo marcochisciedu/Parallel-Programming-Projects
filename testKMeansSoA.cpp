@@ -99,7 +99,7 @@ void testKMeans(const std::string& filename, const int& k, const int& iters_kmea
 
 int main(int argc, char **argv){
     // code to generate random csv files with coordinates to clusters
-    //generate_random_csv("1000002d.csv", 100000, 2, 11);
+    //generate_random_csv("5000002d.csv", 500000, 2, 11);
 
     // test different k
     testKMeans("1mil8d", 2 , 100, 5, 64);
@@ -114,13 +114,13 @@ int main(int argc, char **argv){
     testKMeans("1000004d", 8 , 100, 5, 64);
     testKMeans("1000008d", 8 , 100, 5, 64);
 
+    testKMeans("5000002d", 8 , 100, 5, 64);
+    testKMeans("5000004d", 8 , 100, 5, 64);
+    testKMeans("5000008d", 8 , 100, 5, 64);
+
     testKMeans("1mil2d", 8 , 100, 5, 64);
     testKMeans("1mil4d", 8 , 100, 5, 64);
     testKMeans("1mil8d", 8 , 100, 5, 64);
-
-    testKMeans("10mil2d", 8 , 100, 5, 64);
-    testKMeans("10mil4d", 8 , 100, 5, 64);
-    testKMeans("10mil8d", 8 , 100, 5, 64);
 
     // test different number of threads
     testKMeans("1mil8d", 8 , 100, 5, 2);
