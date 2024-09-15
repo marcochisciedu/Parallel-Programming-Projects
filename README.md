@@ -1,19 +1,24 @@
 # Parallel Programming Projects
 
+# Reports
+The reports that details the parallelization of the sequential algorithms are in the Report folder.
+
 ## Generate data
 generateData.h and generateData.cpp hold the code to generate csv files with random coordinates and txt files with random strings that are used to test the following algorithms.
 
 I also used some coordinates and vocabularies found online to do some tests (csv files found in clusters, txt files in vocabularies).
 
 ## Kmeans
-Cluster.h and Cluster.cpp contain the definition and implementation of the classes Point and Cluster that are used in the Kmeans algorithm.
+PointsSoA.h and PointsSoA.cpp contain the definition and implementation of the class
+MultiDimensionalPointArray, where the points are
+stored as Structures of Arrays, and the Cluster class
 
-In Kmeans.h and Kmeans.cpp the algorithm is implemented as a class with its parameters (k and the number of iterations to cluster), all the points, the clusters and three different run methods.
-runSeq() runs a sequential version of Kmeans, while the other two run methods are two different versions of parallel Kmeans using OpenMP.
+In KmeansSoA.h and KmeansSoA.cpp the algorithm is implemented as a class with its parameters (k and the number of clustering iterations), all the points, the clusters and three different run methods.
+runSeq() runs a sequential version of Kmeans, while the other two are two different versions of parallel Kmeans using OpenMP.
 
 plotKmeans.py is a small fragment of code that prints all the points color-coded given their final cluster id. It was used to produce 2D visualizations of clustering (saved in images) to show that the K-means algorithm is correct.
 
-Finally, testKmeans.cpp is the executable file that compares the three different kmeans implementations with different points, numbers of clusters and iterations multiple times and calculates the average time that each run method takes to complete.
+Finally, testKmeansSoA.cpp is the executable file that compares the three different kmeans implementations with different points, numbers of clusters and iterations multiple times and calculates the average time that each run method takes to complete.
 The average speedup of each parallel method given the sequential one is calculated and saved in a txt file holding all the experiment results.
 
 To prove that the parallel versions are correct (no race conditions), the final clusters of each point, given the sequential or parallel kmeans, are compared.
@@ -23,7 +28,7 @@ LevenshteinDistance.h and LevenshteinDistance.cpp contain a simple implementatio
 
 checkVocabularySeq.h and checkVocabularySeq.cpp are a sequential definition and implementation of checking which is the closest word (or words) and its distance from an input string in a vocabulary.
 
-checkVocabularyPar.h and checkVocabularyPar.cpp are the same, but with two different parallel versions of vocabulary check using OpenMP.
+checkVocabularyPar.h and checkVocabularyPar.cpp contain two different parallel versions of vocabulary check using OpenMP.
 
 Lastly, testLevenshteinDistance.cpp is the executable file that compares the three different ways to check different vocabularies and different input strings.
 The average completion time and parallelization speedup of each vocabulary check are calculated over multiple iterations and saved in a txt file.
