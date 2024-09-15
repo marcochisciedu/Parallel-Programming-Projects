@@ -175,16 +175,12 @@ double KMeansSoA::runPar( const std::string& output_dir, const std::string& orig
     Cluster cluster(0, indexToCoordinates(index));
     clusters.push_back(cluster);
 
-    std::vector<double>distances;
-    std::vector<int>indices;
     // kmeans++ initialization for the other clusters
     for (int i = 1; i < K; i++){
-        distances.clear();
-        indices.clear();
+        std::vector<double>distances(points.getNumPoints());
         // find the closest existing cluster to each point, select the furthest
-#pragma omp parallel default(none) shared(distances,i, points, clusters, indices)  num_threads(threads)
-        {   std::vector<double>privateDistances;
-            std::vector<int>privateIndices;
+#pragma omp parallel default(none) shared(distances,i, points, clusters)  num_threads(threads)
+        {
             #pragma omp for
             for (int p = 0; p < points.getNumPoints(); p++) {
                 double dist = 0.0;
@@ -196,21 +192,13 @@ double KMeansSoA::runPar( const std::string& output_dir, const std::string& orig
                     }
                     dist += sqrt(sum);
                 }
-                privateDistances.push_back(dist);
-                // collect the local indices to know the original index of each distance
-                privateIndices.push_back(p);
-            }
-            // synchronize all the threads, collect all the distances and their original indices
-            #pragma omp critical
-            {
-                distances.insert(distances.end(), privateDistances.begin(), privateDistances.end());
-                indices.insert(indices.end(), privateIndices.begin(), privateIndices.end());
+                distances[p] = dist;
             }
         }
         // select the point that is the furthest from all the other clusters as a new centroid
         index = std::max_element(distances.begin(), distances.end())-distances.begin();
-        points.setClusterIdByIndex(indices[index],i);
-        Cluster cluster(i, indexToCoordinates(indices[index]));
+        points.setClusterIdByIndex(index,i);
+        Cluster cluster(i, indexToCoordinates(index));
         clusters.push_back(cluster);
     }
     printf( "Initialized %d clusters \n", (int)clusters.size() );
@@ -275,17 +263,13 @@ double KMeansSoA::runParPrivate( const std::string& output_dir, const std::strin
     Cluster cluster(0, indexToCoordinates(index));
     clusters.push_back(cluster);
 
-    std::vector<double>distances;
-    std::vector<int>indices;
     // kmeans++ initialization for the other clusters
     for (int i = 1; i < K; i++){
-        distances.clear();
-        indices.clear();
+        std::vector<double>distances(points.getNumPoints());
         // find the closest existing cluster to each point, select the furthest
-#pragma omp parallel default(none) shared(distances,i, points, clusters, indices)  num_threads(threads)
-        {   std::vector<double>privateDistances;
-            std::vector<int>privateIndices;
-            #pragma omp for
+#pragma omp parallel default(none) shared(distances,i, points, clusters)  num_threads(threads)
+        {
+#pragma omp for
             for (int p = 0; p < points.getNumPoints(); p++) {
                 double dist = 0.0;
                 // iterate through all the previously found centroids
@@ -296,21 +280,13 @@ double KMeansSoA::runParPrivate( const std::string& output_dir, const std::strin
                     }
                     dist += sqrt(sum);
                 }
-                privateDistances.push_back(dist);
-                // collect the local indices to know the original index of each distance
-                privateIndices.push_back(p);
-            }
-            // synchronize all the threads, collect all the distances and their original indices
-            #pragma omp critical
-            {
-                distances.insert(distances.end(), privateDistances.begin(), privateDistances.end());
-                indices.insert(indices.end(), privateIndices.begin(), privateIndices.end());
+                distances[p] = dist;
             }
         }
         // select the point that is the furthest from all the other clusters as a new centroid
         index = std::max_element(distances.begin(), distances.end())-distances.begin();
-        points.setClusterIdByIndex(indices[index],i);
-        Cluster cluster(i, indexToCoordinates(indices[index]));
+        points.setClusterIdByIndex(index,i);
+        Cluster cluster(i, indexToCoordinates(index));
         clusters.push_back(cluster);
     }
 

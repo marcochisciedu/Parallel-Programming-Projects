@@ -103,5 +103,3 @@ On average, the sequential version of kmeans completed in 246434 milliseconds
 On average, the parallel version of kmeans completed in 16786.6 milliseconds with a 14.8678 speedup
 On average, the private parallel version of kmeans completed in 9587.7 milliseconds with a 25.7104 speedup
 
-
-
